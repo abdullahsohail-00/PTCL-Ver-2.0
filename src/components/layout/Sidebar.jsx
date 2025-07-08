@@ -210,20 +210,17 @@ const Sidebar = ({ collapsed, activeTab, setActiveTab, toggleSidebar }) => {
         ))}
       </nav>
 
-      {/* Collapse Toggle Button - Fixed at Bottom */}
+      {/* Collapse Toggle Button - Logo Only */}
       <div className="border-t border-gray-200 p-2">
         <button
           onClick={toggleSidebar}
-          className="w-full flex items-center justify-center p-2 rounded-lg bg-gradient-to-r from-gray-100 to-gray-200 hover:from-green-100 hover:to-green-200 transition-all duration-300 transform hover:scale-105 group border border-transparent hover:border-green-300"
+          className="w-full flex items-center justify-center p-3 rounded-lg bg-gradient-to-r from-gray-100 to-gray-200 hover:from-green-100 hover:to-green-200 transition-all duration-300 transform hover:scale-105 group border border-transparent hover:border-green-300"
           title={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
         >
           {collapsed ? (
-            <ChevronsRight className="w-4 h-4 text-gray-600 group-hover:text-green-600 transition-colors duration-300" />
+            <ChevronsRight className="w-5 h-5 text-gray-600 group-hover:text-green-600 transition-colors duration-300" />
           ) : (
-            <>
-              <ChevronsLeft className="w-4 h-4 text-gray-600 group-hover:text-green-600 transition-colors duration-300 mr-2" />
-              <span className="text-xs font-medium text-gray-600 group-hover:text-green-600">Collapse</span>
-            </>
+            <ChevronsLeft className="w-5 h-5 text-gray-600 group-hover:text-green-600 transition-colors duration-300" />
           )}
         </button>
       </div>

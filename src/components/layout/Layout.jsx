@@ -29,34 +29,34 @@ const Layout = () => {
         {/* Top Bar */}
         <TopBar />
         
-        {/* Notice Banner */}
-        <div className="mx-6 mt-4">
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-l-blue-400 border border-blue-200 rounded-r-lg p-3 shadow-sm hover:shadow-md transition-shadow duration-300">
+        {/* Compact Notice Banner */}
+        <div className="mx-4 mt-2">
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-l-blue-400 border border-blue-200 rounded-r p-2 shadow-sm">
             <div className="flex items-center">
-              <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-2">
-                <span className="text-blue-600 text-sm">ℹ️</span>
+              <div className="w-4 h-4 bg-blue-100 rounded-full flex items-center justify-center mr-2 flex-shrink-0">
+                <span className="text-blue-600 text-xs">ℹ️</span>
               </div>
               <div>
-                <p className="text-xs text-blue-800 leading-relaxed">
-                  <strong className="font-semibold">Important Notice:</strong> Dear User, You are requested to verify your info displayed on this page & send correct info to HQs Sales team for update, if incorrect/missing. In case of any wrong info, user will not be eligible for sale incentives. Thank you.
+                <p className="text-xs text-blue-800 leading-tight">
+                  <strong>Important Notice:</strong> Dear User, You are requested to verify your info displayed on this page & send correct info to HQs Sales team for update, if incorrect/missing. In case of any wrong info, user will not be eligible for sale incentives. Thank you.
                 </p>
               </div>
             </div>
           </div>
         </div>
         
-        {/* Main Content Area - Full Width Vendor Form */}
-        <div className="flex-1 p-4">
-          <div className="max-w-6xl mx-auto">
+        {/* Ultra Compact Main Content */}
+        <div className="flex-1 p-2">
+          <div className="max-w-4xl mx-auto">
             <VendorInfoDisplay />
           </div>
         </div>
         
-        {/* Footer */}
-        <footer className="bg-gradient-to-r from-green-600 to-green-700 text-white py-3 mt-6 shadow-lg">
-          <div className="px-6">
+        {/* Compact Footer */}
+        <footer className="bg-gradient-to-r from-green-600 to-green-700 text-white py-2 shadow-lg">
+          <div className="px-4">
             <div className="text-center">
-              <p className="text-xs font-medium">© 2025 PTCL. All rights reserved. Developed & Powered by PTCL IT Team</p>
+              <p className="text-xs">© 2025 PTCL. All rights reserved. Developed & Powered by PTCL IT Team</p>
             </div>
           </div>
         </footer>

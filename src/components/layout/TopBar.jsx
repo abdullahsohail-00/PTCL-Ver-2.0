@@ -3,16 +3,16 @@ import { User, Settings, LogOut, ChevronDown } from 'lucide-react';
 
 const TopBar = () => {
   return (
-    <div className="bg-white border-b border-gray-200 px-6 py-3 shadow-sm">
+    <div className="bg-white border-b border-gray-200 px-4 py-2 shadow-sm">
       <div className="flex justify-between items-center">
         
         {/* Page Title */}
         <div>
-          <h1 className="text-lg font-bold bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent">
+          <h1 className="text-base font-bold bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent">
             PTCL Order Management System
           </h1>
-          <p className="text-xs text-gray-500 mt-0.5 flex items-center">
-            <span className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5 animate-pulse"></span>
+          <p className="text-xs text-gray-500 flex items-center">
+            <span className="w-1 h-1 bg-green-500 rounded-full mr-1 animate-pulse"></span>
             Vendor Information Dashboard
           </p>
         </div>
