@@ -3,6 +3,9 @@ import Sidebar from './Sidebar';
 import TopBar from './TopBar';
 import VendorInfoDisplay from '../vendorinformation/VendorInfoDisplay';
 import NewCustomerOrder from '../orders/NewCustomerOrder';
+import NewCorporateCustomerOrder from '../orders/NewCorporateCustomerOrder';
+import NewFFCustomerOrder from '../orders/NewFFCustomerOrder';
+import ExistingCustomerNewOrder from '../orders/ExistingCustomerNewOrder';
 
 const Layout = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -19,13 +22,13 @@ const Layout = () => {
       case 'new-customer':
         return <NewCustomerOrder />;
       case 'new-corporate':
-        return <div className="p-8 text-center text-gray-500">New Corporate Customer Order - Coming Soon</div>;
+        return <NewCorporateCustomerOrder />;
       case 'existing-customer':
-        return <div className="p-8 text-center text-gray-500">Existing Customer Order - Coming Soon</div>;
+        return <ExistingCustomerNewOrder />;
       case 'corporate-orders':
         return <div className="p-8 text-center text-gray-500">Corporate Customer Orders - Coming Soon</div>;
       case 'new-ff':
-        return <div className="p-8 text-center text-gray-500">New FF Customer Order - Coming Soon</div>;
+        return <NewFFCustomerOrder />;
       case 'order-details':
         return <div className="p-8 text-center text-gray-500">Order Details - Coming Soon</div>;
       case 'tpn-rd-ids':
@@ -50,7 +53,41 @@ const Layout = () => {
     }
   };
 
-
+  // Function to get page title based on active tab
+  const getPageTitle = () => {
+    switch (activeTab) {
+      case 'new-customer':
+        return 'Customer Order Management System';
+      case 'new-corporate':
+        return 'Corporate Customer Order System';
+      case 'existing-customer':
+        return 'Existing Customer Order System';
+      case 'corporate-orders':
+        return 'Corporate Customer Orders System';
+      case 'new-ff':
+        return 'FF Customer Order System';
+      case 'order-details':
+        return 'Order Details Management System';
+      case 'tpn-rd-ids':
+        return 'TPN/RD IDs Management System';
+      case 'user-management':
+        return 'User Management System';
+      case 'vendor-management':
+        return 'Vendor Information Dashboard';
+      case 'dds':
+        return 'DDS Management System';
+      case 'smb-dds':
+        return 'SMB DDS Management System';
+      case 'create-user':
+        return 'User Creation System';
+      case 'user-status':
+        return 'User Status Management System';
+      case 'vendor-code':
+        return 'Vendor Code Management System';
+      default:
+        return 'Vendor Information Dashboard';
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex">
@@ -90,7 +127,7 @@ const Layout = () => {
         
         {/* Dynamic Content Based on Active Tab */}
         <div className="flex-1 p-2">
-          <div className={`mx-auto ${activeTab === 'new-customer' ? 'max-w-6xl px-4' : 'max-w-4xl'}`}>
+          <div className={`mx-auto ${activeTab === 'new-customer' || activeTab === 'new-corporate' || activeTab === 'new-ff' || activeTab === 'existing-customer' ? 'max-w-6xl px-4' : 'max-w-4xl'}`}>
             {renderContent()}
           </div>
         </div>
