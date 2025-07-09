@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import TopBar from './TopBar';
-import VendorInfoDisplay from '../forms/VendorInfoDisplay';
+import VendorInfoDisplay from '../vendorinformation/VendorInfoDisplay';
 import StatsCards from '../dashboard/StatsCards';
 import QuickActions from '../dashboard/QuickActions';
 import RecentOrders from '../dashboard/RecentOrders';
