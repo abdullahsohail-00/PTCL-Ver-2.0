@@ -6,6 +6,7 @@ import NewCustomerOrder from '../orders/NewCustomerOrder';
 import NewCorporateCustomerOrder from '../orders/NewCorporateCustomerOrder';
 import NewFFCustomerOrder from '../orders/NewFFCustomerOrder';
 import ExistingCustomerNewOrder from '../orders/ExistingCustomerNewOrder';
+import { OrderSearchPage } from '../ordersearch';
 
 const Layout = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -30,7 +31,7 @@ const Layout = () => {
       case 'new-ff':
         return <NewFFCustomerOrder />;
       case 'order-details':
-        return <div className="p-8 text-center text-gray-500">Order Details - Coming Soon</div>;
+        return <OrderSearchPage />;
       case 'tpn-rd-ids':
         return <div className="p-8 text-center text-gray-500">TPN/RD IDs - Coming Soon</div>;
       case 'user-management':
