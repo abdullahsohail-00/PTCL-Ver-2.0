@@ -6,11 +6,20 @@ import NewCustomerOrder from '../orders/NewCustomerOrder';
 import NewCorporateCustomerOrder from '../orders/NewCorporateCustomerOrder';
 import NewFFCustomerOrder from '../orders/NewFFCustomerOrder';
 import ExistingCustomerNewOrder from '../orders/ExistingCustomerNewOrder';
+<<<<<<< HEAD
+=======
+import CorporateCustomerOrders from '../orders/CorporateCustomerOrders';
+>>>>>>> 6f73e1d01d7628b0344b8471f3f8a520e8e174e7
 import OrderDetailsPage from '../management/OrderDetailsPage';
 import TPNRDIDsPage from '../management/TPNRDIDsPage';
 import CreateUserPage from '../management/CreateUserPage';
 import UserStatusPage from '../management/UserStatusPage';
 import InsertVendorCodePage from '../administration/InsertVendorCodePage';
+<<<<<<< HEAD
+=======
+import SMBNewCustomerForm from '../management/SMB-DDS/SMBNewCustomerForms';
+import SMBExistingCustomerForm from '../management/SMB-DDS/SMBExistingCustomerForm';
+>>>>>>> 6f73e1d01d7628b0344b8471f3f8a520e8e174e7
 
 const Layout = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -31,7 +40,11 @@ const Layout = () => {
       case 'existing-customer':
         return <ExistingCustomerNewOrder />;
       case 'corporate-orders':
+<<<<<<< HEAD
         return <div className="p-8 text-center text-gray-500">Corporate Customer Orders - Coming Soon</div>;
+=======
+        return <CorporateCustomerOrders />;
+>>>>>>> 6f73e1d01d7628b0344b8471f3f8a520e8e174e7
       case 'new-ff':
         return <NewFFCustomerOrder />;
       case 'order-details':
@@ -61,9 +74,15 @@ const Layout = () => {
       case 'smb-dds':
         return <div className="p-8 text-center text-gray-500">SMB DDS - Coming Soon</div>;
       case 'smb-new-customer':
+<<<<<<< HEAD
         return <div className="p-8 text-center text-gray-500">SMB New Customer - Coming Soon</div>;
       case 'smb-existing-customer':
         return <div className="p-8 text-center text-gray-500">SMB Existing Customer - Coming Soon</div>;
+=======
+        return <SMBNewCustomerForm />;
+      case 'smb-existing-customer':
+        return <SMBExistingCustomerForm/>;
+>>>>>>> 6f73e1d01d7628b0344b8471f3f8a520e8e174e7
       case 'smb-new-customer-bulk':
         return <div className="p-8 text-center text-gray-500">SMB New Customer Bulk - Coming Soon</div>;
       case 'smb-existing-customer-bulk':
@@ -179,7 +198,11 @@ const Layout = () => {
         )}
         
         {/* Dynamic Content Based on Active Tab */}
+<<<<<<< HEAD
         {activeTab === 'order-details' || activeTab === 'tpn-rd-ids' || activeTab === 'user-status' || activeTab === 'vendor-code' ? (
+=======
+        {activeTab === 'order-details' || activeTab === 'tpn-rd-ids' || activeTab === 'user-status' || activeTab === 'vendor-code' || activeTab === 'corporate-orders' ? (
+>>>>>>> 6f73e1d01d7628b0344b8471f3f8a520e8e174e7
           // Special handling for pages that need full width - no padding
           <div className="flex-1 overflow-hidden">
             {renderContent()}

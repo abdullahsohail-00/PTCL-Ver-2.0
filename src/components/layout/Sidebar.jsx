@@ -71,8 +71,13 @@ const Sidebar = ({ collapsed, activeTab, setActiveTab, toggleSidebar }) => {
           id: 'smb-dds', 
           label: 'SMB DDS',
           submenu: [
+<<<<<<< HEAD
             { id: 'smb-new-customers', label: 'SMB New Customers' },
             { id: 'smb-existing-customers', label: 'SMB Existing Customers' },
+=======
+            { id: 'smb-new-customer', label: 'SMB New Customers' },
+            { id: 'smb-existing-customer', label: 'SMB Existing Customers' },
+>>>>>>> 6f73e1d01d7628b0344b8471f3f8a520e8e174e7
             { id: 'smb-new-customers-detail', label: 'SMB New Customers Detail' },
             { id: 'smb-existing-customers-detail', label: 'SMB Existing Customers Detail' },
             { id: 'smb-summary', label: 'SMB Summary' }
