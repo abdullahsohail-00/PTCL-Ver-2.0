@@ -6,13 +6,25 @@ import {
   ChevronDown, 
   ChevronsLeft,
   ChevronsRight,
-  Building2
+  Building2,
+  Info
 } from 'lucide-react';
 
 const Sidebar = ({ collapsed, activeTab, setActiveTab, toggleSidebar }) => {
   const [expandedMenu, setExpandedMenu] = useState('orders');
+  // Add state for expanded submenus under Management
+  const [expandedSubmenus, setExpandedSubmenus] = useState({});
 
   const navigationItems = [
+    { 
+      id: 'vendor-info', 
+      label: 'Vendor Info', 
+      icon: Info,
+      color: 'from-blue-500 to-blue-600',
+      submenu: [
+        { id: 'vendor-information', label: 'Vendor Information' }
+      ]
+    },
     { 
       id: 'orders', 
       label: 'Orders', 
@@ -34,10 +46,38 @@ const Sidebar = ({ collapsed, activeTab, setActiveTab, toggleSidebar }) => {
       submenu: [
         { id: 'order-details', label: 'Order Details' },
         { id: 'tpn-rd-ids', label: 'TPN/RD IDs' },
-        { id: 'user-management', label: 'User Management' },
-        { id: 'vendor-management', label: 'Vendor Management' },
-        { id: 'dds', label: 'DDS' },
-        { id: 'smb-dds', label: 'SMB DDS' }
+        { 
+          id: 'user-management', 
+          label: 'User Management',
+          submenu: [
+            { id: 'create-user', label: 'Create User' },
+            { id: 'user-status', label: 'User Status' }
+          ]
+        },
+        { 
+          id: 'dds', 
+          label: 'DDS',
+          submenu: [
+            { id: 'dds-new-customers', label: 'DDS New Customers' },
+            { id: 'dds-existing-customers', label: 'DDS Existing Customers' },
+            { id: 'dds-retailer', label: 'DDS Retailer' },
+            { id: 'dds-new-customers-detail', label: 'DDS New Customers Detail' },
+            { id: 'dds-existing-customers-detail', label: 'DDS Existing Customers Detail' },
+            { id: 'dds-retailer-detail', label: 'DDS Retailer Detail' },
+            { id: 'dds-summary', label: 'DDS Summary' }
+          ]
+        },
+        { 
+          id: 'smb-dds', 
+          label: 'SMB DDS',
+          submenu: [
+            { id: 'smb-new-customers', label: 'SMB New Customers' },
+            { id: 'smb-existing-customers', label: 'SMB Existing Customers' },
+            { id: 'smb-new-customers-detail', label: 'SMB New Customers Detail' },
+            { id: 'smb-existing-customers-detail', label: 'SMB Existing Customers Detail' },
+            { id: 'smb-summary', label: 'SMB Summary' }
+          ]
+        }
       ]
     },
     { 
@@ -46,8 +86,6 @@ const Sidebar = ({ collapsed, activeTab, setActiveTab, toggleSidebar }) => {
       icon: Shield,
       color: 'from-red-500 to-red-600',
       submenu: [
-        { id: 'create-user', label: 'Create User' },
-        { id: 'user-status', label: 'User Status' },
         { id: 'vendor-code', label: 'Insert Vendor Code' }
       ]
     }
@@ -67,16 +105,36 @@ const Sidebar = ({ collapsed, activeTab, setActiveTab, toggleSidebar }) => {
   };
 
   const handleSubMenuClick = (subItem) => {
-    setActiveTab(subItem.id);
+    // If submenu has its own submenu, toggle its expansion
+    if (subItem.submenu && (subItem.id === 'user-management' || subItem.id === 'dds' || subItem.id === 'smb-dds')) {
+      setExpandedSubmenus((prev) => ({
+        ...prev,
+        [subItem.id]: !prev[subItem.id],
+      }));
+    } else {
+      setActiveTab(subItem.id);
+    }
   };
 
   const isItemActive = (item) => {
-    return activeTab === item.id || item.submenu?.some(sub => sub.id === activeTab);
+    return activeTab === item.id || item.submenu?.some(sub => {
+      if (sub.submenu) {
+        return sub.submenu.some(subSub => subSub.id === activeTab);
+      }
+      return sub.id === activeTab;
+    });
+  };
+
+  const isSubItemActive = (subItem) => {
+    if (subItem.submenu) {
+      return subItem.submenu.some(sub => sub.id === activeTab);
+    }
+    return activeTab === subItem.id;
   };
 
   return (
     <div className={`fixed left-0 top-0 h-full bg-white border-r border-gray-200 shadow-lg transition-all duration-300 z-40 flex flex-col ${
-      collapsed ? 'w-14' : 'w-52'
+      collapsed ? 'w-12' : 'w-64'
     }`}>
       
       {/* Logo Section */}
@@ -165,22 +223,52 @@ const Sidebar = ({ collapsed, activeTab, setActiveTab, toggleSidebar }) => {
             {item.submenu && !collapsed && expandedMenu === item.id && (
               <div className="mt-1 ml-4 space-y-0.5 animate-in slide-in-from-top-2 duration-300">
                 {item.submenu.map((subItem) => (
-                  <button
-                    key={subItem.id}
-                    onClick={() => handleSubMenuClick(subItem)}
-                    className={`group w-full flex items-center px-3 py-1.5 rounded-md text-xs transition-all duration-300 transform hover:scale-105 ${
-                      activeTab === subItem.id
-                        ? `bg-gradient-to-r ${item.color} text-white shadow-sm font-medium`
-                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800 hover:shadow-sm'
-                    }`}
-                  >
-                    <div className={`w-1.5 h-1.5 rounded-full mr-2 transition-all duration-300 ${
-                      activeTab === subItem.id 
-                        ? 'bg-white' 
-                        : 'bg-gray-300 group-hover:bg-gray-400'
-                    }`} />
-                    <span className="font-medium truncate">{subItem.label}</span>
-                  </button>
+                  <div key={subItem.id}>
+                    <button
+                      onClick={() => handleSubMenuClick(subItem)}
+                      className={`group w-full flex items-center px-3 py-1.5 rounded-md text-xs transition-all duration-300 transform hover:scale-105 ${
+                        isSubItemActive(subItem)
+                          ? `bg-gradient-to-r ${item.color} text-white shadow-sm font-medium`
+                          : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800 hover:shadow-sm'
+                      }`}
+                    >
+                      <div className={`w-1.5 h-1.5 rounded-full mr-2 transition-all duration-300 ${
+                        isSubItemActive(subItem) 
+                          ? 'bg-white' 
+                          : 'bg-gray-300 group-hover:bg-gray-400'
+                      }`} />
+                      <span className="font-medium truncate flex-1 text-left">{subItem.label}</span>
+                      {/* Chevron for submenus */}
+                      {(subItem.id === 'user-management' || subItem.id === 'dds' || subItem.id === 'smb-dds') && subItem.submenu && (
+                        <ChevronDown className={`w-3 h-3 ml-1 transition-transform duration-300 ${
+                          expandedSubmenus[subItem.id] ? 'rotate-180' : ''
+                        }`} />
+                      )}
+                    </button>
+                    {/* Sub-submenu for User Management, DDS, SMB DDS */}
+                    {(subItem.id === 'user-management' || subItem.id === 'dds' || subItem.id === 'smb-dds') && subItem.submenu && expandedSubmenus[subItem.id] && (
+                      <div className="mt-0.5 ml-6 space-y-0.5">
+                        {subItem.submenu.map((subSubItem) => (
+                          <button
+                            key={subSubItem.id}
+                            onClick={() => handleSubMenuClick(subSubItem)}
+                            className={`group w-full flex items-center px-3 py-1 rounded-md text-xs transition-all duration-300 transform hover:scale-105 ${
+                              activeTab === subSubItem.id
+                                ? `bg-gradient-to-r ${item.color} text-white shadow-sm font-medium`
+                                : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                            }`}
+                          >
+                            <div className={`w-1 h-1 rounded-full mr-2 transition-all duration-300 ${
+                              activeTab === subSubItem.id 
+                                ? 'bg-white' 
+                                : 'bg-gray-300 group-hover:bg-gray-400'
+                            }`} />
+                            <span className="font-medium truncate text-left">{subSubItem.label}</span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 ))}
               </div>
             )}
@@ -194,13 +282,27 @@ const Sidebar = ({ collapsed, activeTab, setActiveTab, toggleSidebar }) => {
                   </div>
                   <div className="space-y-1">
                     {item.submenu.map((subItem) => (
-                      <button
-                        key={subItem.id}
-                        onClick={() => handleSubMenuClick(subItem)}
-                        className="block w-full text-left py-1 px-2 text-xs hover:text-green-300 hover:bg-gray-800 transition-colors rounded"
-                      >
-                        {subItem.label}
-                      </button>
+                      <div key={subItem.id}>
+                        <button
+                          onClick={() => subItem.submenu ? null : handleSubMenuClick(subItem)}
+                          className="block w-full text-left py-1 px-2 text-xs hover:text-green-300 hover:bg-gray-800 transition-colors rounded"
+                        >
+                          {subItem.label}
+                        </button>
+                        {subItem.submenu && (
+                          <div className="ml-4 mt-1">
+                            {subItem.submenu.map((subSubItem) => (
+                              <button
+                                key={subSubItem.id}
+                                onClick={() => handleSubMenuClick(subSubItem)}
+                                className="block w-full text-left py-0.5 px-2 text-xs text-gray-400 hover:text-green-200 hover:bg-gray-700 transition-colors rounded"
+                              >
+                                → {subSubItem.label}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -214,7 +316,7 @@ const Sidebar = ({ collapsed, activeTab, setActiveTab, toggleSidebar }) => {
       <div className="border-t border-gray-200 p-2">
         <button
           onClick={toggleSidebar}
-          className="w-full flex items-center justify-center p-3 rounded-lg bg-gradient-to-r from-gray-100 to-gray-200 hover:from-green-100 hover:to-green-200 transition-all duration-300 transform hover:scale-105 group border border-transparent hover:border-green-300"
+          className={`w-full flex items-center justify-center ${collapsed ? 'p-3' : 'p-1.5'} rounded-lg bg-gradient-to-r from-gray-100 to-gray-200 hover:from-green-100 hover:to-green-200 transition-all duration-300 transform hover:scale-105 group border border-transparent hover:border-green-300`}
           title={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
         >
           {collapsed ? (
