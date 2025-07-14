@@ -42,24 +42,34 @@ const Layout = () => {
         return <div className="p-8 text-center text-gray-500">User Management - Coming Soon</div>;
       case 'vendor-information':
         return <VendorInfoDisplay />;
-      // DDS Pages
       case 'dds':
-      case 'dds-new-customers':
-      case 'dds-existing-customers':
-      case 'dds-retailer':
-      case 'dds-new-customers-detail':
-      case 'dds-existing-customers-detail':
-      case 'dds-retailer-detail':
-      case 'dds-summary':
         return <div className="p-8 text-center text-gray-500">DDS - Coming Soon</div>;
-      // SMB DDS Pages
+      case 'dds-new-customer':
+        return <div className="p-8 text-center text-gray-500">DDS New Customer - Coming Soon</div>;
+      case 'dds-existing-customer':
+        return <div className="p-8 text-center text-gray-500">DDS Existing Customer - Coming Soon</div>;
+      case 'dds-retailer':
+        return <div className="p-8 text-center text-gray-500">DDS Retailer - Coming Soon</div>;
+      case 'dds-new-customer-bulk':
+        return <div className="p-8 text-center text-gray-500">DDS New Customer Bulk - Coming Soon</div>;
+      case 'dds-existing-customer-bulk':
+        return <div className="p-8 text-center text-gray-500">DDS Existing Customer Bulk - Coming Soon</div>;
+      case 'dds-retailer-details':
+        return <div className="p-8 text-center text-gray-500">DDS Retailer Details - Coming Soon</div>;
+      case 'dds-summary':
+        return <div className="p-8 text-center text-gray-500">DDS Summary - Coming Soon</div>;
       case 'smb-dds':
-      case 'smb-new-customers':
-      case 'smb-existing-customers':
-      case 'smb-new-customers-detail':
-      case 'smb-existing-customers-detail':
-      case 'smb-summary':
         return <div className="p-8 text-center text-gray-500">SMB DDS - Coming Soon</div>;
+      case 'smb-new-customer':
+        return <div className="p-8 text-center text-gray-500">SMB New Customer - Coming Soon</div>;
+      case 'smb-existing-customer':
+        return <div className="p-8 text-center text-gray-500">SMB Existing Customer - Coming Soon</div>;
+      case 'smb-new-customer-bulk':
+        return <div className="p-8 text-center text-gray-500">SMB New Customer Bulk - Coming Soon</div>;
+      case 'smb-existing-customer-bulk':
+        return <div className="p-8 text-center text-gray-500">SMB Existing Customer Bulk - Coming Soon</div>;
+      case 'smb-summary':
+        return <div className="p-8 text-center text-gray-500">SMB Summary - Coming Soon</div>;
       case 'create-user':
         return <CreateUserPage />;
       case 'user-status':
@@ -67,7 +77,7 @@ const Layout = () => {
       case 'vendor-code':
         return <InsertVendorCodePage />;
       default:
-        // Default to vendor-information
+        // Default to vendor-management instead of new-customer
         return <VendorInfoDisplay />;
     }
   };

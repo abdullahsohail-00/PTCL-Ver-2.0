@@ -393,7 +393,13 @@ const NewCorporateCustomerOrder = () => {
                   value={formData.comments}
                   onChange={(value) => handleInputChange('comments', value)}
                   placeholder="Enter any additional comments or requirements..."
-                />
+                /><div className="mt-3 text-center">
+                <div className="bg-orange-100 border border-orange-300 rounded-lg px-3 py-2 inline-block">
+                  <span className="text-xs font-medium text-orange-800">
+                    Installation charges are Rs. 5,500 standard for all
+                  </span>
+                </div>
+              </div>
               </div>
             </div>
           </div>
@@ -421,13 +427,7 @@ const NewCorporateCustomerOrder = () => {
             </div>
             
             {/* Installation Charges Notice */}
-            <div className="mt-3 text-center">
-              <div className="bg-orange-100 border border-orange-300 rounded-lg px-3 py-2 inline-block">
-                <span className="text-xs font-medium text-orange-800">
-                  Installation charges are Rs. 5,500 standard for all
-                </span>
-              </div>
-            </div>
+            
           </div>
         </div>
       </form>
