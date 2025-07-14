@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/abdullahsohail-00/PTCL-Ver-2.0/static/css/main.1ebae064.css",
+    "main.js": "/abdullahsohail-00/PTCL-Ver-2.0/static/js/main.136701ff.js",
+    "index.html": "/abdullahsohail-00/PTCL-Ver-2.0/index.html",
+    "main.1ebae064.css.map": "/abdullahsohail-00/PTCL-Ver-2.0/static/css/main.1ebae064.css.map",
+    "main.136701ff.js.map": "/abdullahsohail-00/PTCL-Ver-2.0/static/js/main.136701ff.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1ebae064.css",
+    "static/js/main.136701ff.js"
+  ]
+}
