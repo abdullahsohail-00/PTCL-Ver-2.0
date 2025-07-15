@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/PTCL-Ver-2.0/static/css/main.1ebae064.css",
-    "main.js": "/PTCL-Ver-2.0/static/js/main.136701ff.js",
+    "main.css": "/PTCL-Ver-2.0/static/css/main.c12ec587.css",
+    "main.js": "/PTCL-Ver-2.0/static/js/main.95700282.js",
     "index.html": "/PTCL-Ver-2.0/index.html",
-    "main.1ebae064.css.map": "/PTCL-Ver-2.0/static/css/main.1ebae064.css.map",
-    "main.136701ff.js.map": "/PTCL-Ver-2.0/static/js/main.136701ff.js.map"
+    "main.c12ec587.css.map": "/PTCL-Ver-2.0/static/css/main.c12ec587.css.map",
+    "main.95700282.js.map": "/PTCL-Ver-2.0/static/js/main.95700282.js.map"
   },
   "entrypoints": [
-    "static/css/main.1ebae064.css",
-    "static/js/main.136701ff.js"
+    "static/css/main.c12ec587.css",
+    "static/js/main.95700282.js"
   ]
 }
