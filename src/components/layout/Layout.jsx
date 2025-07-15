@@ -12,8 +12,18 @@ import TPNRDIDsPage from '../management/TPNRDIDsPage';
 import CreateUserPage from '../management/CreateUserPage';
 import UserStatusPage from '../management/UserStatusPage';
 import InsertVendorCodePage from '../administration/InsertVendorCodePage';
-import SMBNewCustomerForms from '../management/SMB-DDS/SMBNewCustomerForms';
+import DDSNewCustomer from '../management/DDS/DDSNewCustomer';
+import DDSExistingCustomer from '../management/DDS/DDSExistingCustomer';
+import DDSRetailer from '../management/DDS/DDSRetailer';
+import DDSNewCustomerDetail from '../management/DDS/DDSNewCustomerDetail';
+import DDSExistingCustomerDetails from '../management/DDS/DDSExistingCustomerDetails';
+import DDSRetailerDetails from '../management/DDS/DDSRetailerDetails';
+import DDSSummary from '../management/DDS/DDSSummary';
+import SMBNewCustomerForm from '../management/SMB-DDS/SMBNewCustomerForms';
 import SMBExistingCustomerForm from '../management/SMB-DDS/SMBExistingCustomerForm';
+import SMBNewCustomerDetails from '../management/SMB-DDS/SMBNewCustomerDetails';
+import SMBExistingCustomerDetails from '../management/SMB-DDS/SMBExistingCustomerDetails';
+import SMBSummary from '../management/SMB-DDS/SMBSummary';
 
 const Layout = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -41,44 +51,38 @@ const Layout = () => {
         return <OrderDetailsPage />;
       case 'tpn-rd-ids':
         return <TPNRDIDsPage />;
-      case 'user-management':
-        return <div className="p-8 text-center text-gray-500">User Management - Coming Soon</div>;
       case 'vendor-information':
         return <VendorInfoDisplay />;
-      case 'dds':
-        return <div className="p-8 text-center text-gray-500">DDS - Coming Soon</div>;
       case 'dds-new-customer':
-        return <div className="p-8 text-center text-gray-500">DDS New Customer - Coming Soon</div>;
-      case 'dds-existing-customer':
-        return <div className="p-8 text-center text-gray-500">DDS Existing Customer - Coming Soon</div>;
+        return <DDSNewCustomer />;
+      case 'dds-existing-customers':
+        return <DDSExistingCustomer />;
       case 'dds-retailer':
-        return <div className="p-8 text-center text-gray-500">DDS Retailer - Coming Soon</div>;
-      case 'dds-new-customer-bulk':
-        return <div className="p-8 text-center text-gray-500">DDS New Customer Bulk - Coming Soon</div>;
-      case 'dds-existing-customer-bulk':
-        return <div className="p-8 text-center text-gray-500">DDS Existing Customer Bulk - Coming Soon</div>;
-      case 'dds-retailer-details':
-        return <div className="p-8 text-center text-gray-500">DDS Retailer Details - Coming Soon</div>;
+        return <DDSRetailer />;
       case 'dds-summary':
-        return <div className="p-8 text-center text-gray-500">DDS Summary - Coming Soon</div>;
-      case 'smb-dds':
-        return <div className="p-8 text-center text-gray-500">SMB DDS - Coming Soon</div>;
+        return <DDSSummary />;
       case 'smb-new-customer':
-        return <SMBNewCustomerForms/>;
+        return <SMBNewCustomerForm />;
       case 'smb-existing-customer':
         return <SMBExistingCustomerForm/>;
-      case 'smb-new-customer-bulk':
-        return <div className="p-8 text-center text-gray-500">SMB New Customer Bulk - Coming Soon</div>;
-      case 'smb-existing-customer-bulk':
-        return <div className="p-8 text-center text-gray-500">SMB Existing Customer Bulk - Coming Soon</div>;
-      case 'smb-summary':
-        return <div className="p-8 text-center text-gray-500">SMB Summary - Coming Soon</div>;
       case 'create-user':
         return <CreateUserPage />;
       case 'user-status':
         return <UserStatusPage />;
       case 'vendor-code':
         return <InsertVendorCodePage />;
+      case 'dds-new-customers-detail':
+        return <DDSNewCustomerDetail />;
+      case 'dds-existing-customers-detail':
+        return <DDSExistingCustomerDetails />;
+      case 'dds-retailer-detail':
+        return <DDSRetailerDetails />;
+      case 'smb-new-customer-details':
+        return <SMBNewCustomerDetails />;
+      case 'smb-existing-customer-details':
+        return <SMBExistingCustomerDetails />;
+      case 'smb-summary':
+        return <SMBSummary />;
       default:
         // Default to vendor-management instead of new-customer
         return <VendorInfoDisplay />;
@@ -128,10 +132,6 @@ const Layout = () => {
         return 'SMB New Customer System';
       case 'smb-existing-customer':
         return 'SMB Existing Customer System';
-      case 'smb-new-customer-bulk':
-        return 'SMB New Customer Bulk System';
-      case 'smb-existing-customer-bulk':
-        return 'SMB Existing Customer Bulk System';
       case 'smb-summary':
         return 'SMB Summary System';
       case 'create-user':
@@ -182,20 +182,28 @@ const Layout = () => {
         )}
         
         {/* Dynamic Content Based on Active Tab */}
-        {activeTab === 'order-details' || activeTab === 'tpn-rd-ids' || activeTab === 'user-status' || activeTab === 'vendor-code' || activeTab === 'corporate-orders' ? (
+        {activeTab === 'order-details' || activeTab === 'tpn-rd-ids' || activeTab === 'user-status' || activeTab === 'vendor-code' ? (
           // Special handling for pages that need full width - no padding
           <div className="flex-1 overflow-hidden">
             {renderContent()}
           </div>
         ) : (
-          // Regular container for other pages
+          // All other pages: centered container with padding
           <div className="flex-1 p-2 overflow-x-hidden">
             <div className={`mx-auto ${
-              activeTab === 'new-customer' || 
-              activeTab === 'new-corporate' || 
-              activeTab === 'new-ff' || 
-              activeTab === 'existing-customer' 
-                ? 'max-w-6xl px-4' 
+              [
+                'new-customer',
+                'create-user',
+                'new-corporate',
+                'new-ff',
+                'existing-customer',
+                'dds-new-customer',
+                'dds-existing-customers',
+                'dds-retailer',
+                'smb-new-customer',
+                'smb-existing-customer'
+              ].includes(activeTab)
+                ? 'max-w-6xl px-4'
                 : 'max-w-4xl'
             }`}>
               {renderContent()}

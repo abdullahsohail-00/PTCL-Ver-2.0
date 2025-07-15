@@ -58,7 +58,7 @@ const Sidebar = ({ collapsed, activeTab, setActiveTab, toggleSidebar }) => {
           id: 'dds', 
           label: 'DDS',
           submenu: [
-            { id: 'dds-new-customers', label: 'DDS New Customers' },
+            { id: 'dds-new-customer', label: 'DDS New Customer' },
             { id: 'dds-existing-customers', label: 'DDS Existing Customers' },
             { id: 'dds-retailer', label: 'DDS Retailer' },
             { id: 'dds-new-customers-detail', label: 'DDS New Customers Detail' },
@@ -73,8 +73,8 @@ const Sidebar = ({ collapsed, activeTab, setActiveTab, toggleSidebar }) => {
           submenu: [
             { id: 'smb-new-customer', label: 'SMB New Customers' },
             { id: 'smb-existing-customer', label: 'SMB Existing Customers' },
-            { id: 'smb-new-customers-detail', label: 'SMB New Customers Detail' },
-            { id: 'smb-existing-customers-detail', label: 'SMB Existing Customers Detail' },
+            { id: 'smb-new-customer-details', label: 'SMB New Customer Details' },
+            { id: 'smb-existing-customer-details', label: 'SMB Existing Customer Details' },
             { id: 'smb-summary', label: 'SMB Summary' }
           ]
         }
