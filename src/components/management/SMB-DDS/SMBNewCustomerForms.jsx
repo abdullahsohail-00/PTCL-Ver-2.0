@@ -68,7 +68,7 @@ const FormSection = ({ title, icon: Icon, children }) => (
   </div>
 );
 
-const SMBNewCustomerForm = () => {
+const SMBNewCustomerForms = () => {
   const [formData, setFormData] = useState({
     date: '2025-07-14',
     rdId: '',
@@ -250,4 +250,4 @@ const SMBNewCustomerForm = () => {
   );
 };
 
-export default SMBNewCustomerForm;
+export default SMBNewCustomerForms;
