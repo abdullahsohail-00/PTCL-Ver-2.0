@@ -25,7 +25,9 @@ import SMBNewCustomerDetails from '../management/SMB-DDS/SMBNewCustomerDetails';
 import SMBExistingCustomerDetails from '../management/SMB-DDS/SMBExistingCustomerDetails';
 import SMBSummary from '../management/SMB-DDS/SMBSummary';
 
-const Layout = () => {
+import LoginPage from '../auth/LoginPage';
+
+const Layout = ({ onLogout }) => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   // Changed default active tab to vendor-management
   const [activeTab, setActiveTab] = useState('vendor-information');
@@ -82,7 +84,9 @@ const Layout = () => {
       case 'smb-existing-customer-details':
         return <SMBExistingCustomerDetails />;
       case 'smb-summary':
-        return <SMBSummary />;
+      return <SMBSummary />;
+
+       
       default:
         // Default to vendor-management instead of new-customer
         return <VendorInfoDisplay />;
@@ -161,7 +165,7 @@ const Layout = () => {
       }`}>
         
         {/* Top Bar */}
-        <TopBar activeTab={activeTab} />
+        <TopBar activeTab={activeTab} onLogout={onLogout} />
         
         {/* Compact Notice Banner - Only show on vendor-information */}
         {activeTab === 'vendor-information' && (

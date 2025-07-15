@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { User, Settings, LogOut } from 'lucide-react';
 
-const TopBar = ({ activeTab }) => {
+const TopBar = ({ activeTab, onLogout }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   // Function to get page subtitle based on active tab
@@ -45,8 +45,9 @@ const TopBar = ({ activeTab }) => {
   };
 
   const handleSignOut = () => {
-    // Add sign out logic here
-    alert('Signing out...');
+    if (onLogout) {
+      onLogout();
+    }
     setIsDropdownOpen(false);
   };
 
