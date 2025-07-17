@@ -150,30 +150,16 @@ const SMBNewCustomerForms = () => {
   return (
     <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} className="w-full">
       {/* Header */}
-      <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-t-lg p-3 text-white shadow-lg">
+      <div className="bg-gradient-to-t from-green-500 via-green-600 to-teal-600 rounded-t p-3 text-white shadow-md">
         <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            {!logoError ? (
-              <img
-                src="https://ptcl.com.pk/images/ptcl-logo-plain.svg"
-                alt="PTCL Logo"
-                className="h-6 w-auto object-contain bg-white p-1 rounded"
-                onError={() => setLogoError(true)}
-              />
-            ) : (
-              <div className="w-6 h-6 bg-white bg-opacity-20 rounded flex items-center justify-center">
-                <Building className="w-3 h-3" />
-              </div>
-            )}
-          </div>
+          {/* Logo - removed as per request */}
+          
           <div className="flex-1 text-center">
             <h1 className="text-sm font-bold">SMB New Customer</h1>
             <p className="text-green-100 text-xs">Create new SMB customer</p>
           </div>
-          <div className="flex items-center space-x-1 bg-white bg-opacity-20 px-2 py-1 rounded-full">
-            <Shield className="w-3 h-3" />
-            <span className="text-xs">Secured</span>
-          </div>
+          
+          {/* Security Badge - removed as per request */}
         </div>
       </div>
 

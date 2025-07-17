@@ -307,32 +307,14 @@ const UserStatusPage = () => {
   return (
     <div className="h-full w-full flex flex-col bg-gray-50">
       {/* Header */}
-      <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-t-lg p-3 text-white shadow-lg mx-4 mt-4">
+      <div className="bg-gradient-to-t from-green-500 via-green-600 to-teal-600 rounded-t p-3 text-white shadow-md mx-4 mt-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <img 
-              src="https://ptcl.com.pk/images/ptcl-logo-plain.svg" 
-              alt="PTCL Logo" 
-              className="h-6 w-auto object-contain bg-white p-1 rounded"
-              onError={(e) => {
-                e.target.style.display = 'none';
-                e.target.nextSibling.style.display = 'flex';
-              }}
-            />
-            <div className="w-6 h-6 bg-white bg-opacity-20 rounded flex items-center justify-center" style={{display: 'none'}}>
-              <User className="w-3 h-3" />
-            </div>
-          </div>
           
           <div className="flex-1 text-center px-2">
             <h1 className="text-sm font-bold">User Status</h1>
             <p className="text-green-100 text-xs hidden sm:block">View and manage user account status</p>
           </div>
           
-          <div className="flex items-center space-x-1 bg-white bg-opacity-20 px-2 py-1 rounded-full">
-            <Shield className="w-3 h-3" />
-            <span className="text-xs hidden sm:inline">Secured</span>
-          </div>
         </div>
       </div>
 

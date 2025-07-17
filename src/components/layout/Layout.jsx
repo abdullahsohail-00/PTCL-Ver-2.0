@@ -24,16 +24,30 @@ import SMBExistingCustomerForm from '../management/SMB-DDS/SMBExistingCustomerFo
 import SMBNewCustomerDetails from '../management/SMB-DDS/SMBNewCustomerDetails';
 import SMBExistingCustomerDetails from '../management/SMB-DDS/SMBExistingCustomerDetails';
 import SMBSummary from '../management/SMB-DDS/SMBSummary';
-
+import RestoreOrderForm from '../administration/RestoreOrderForm';
 import LoginPage from '../auth/LoginPage';
+import FeasibilityMapsPage from '../administration/FeasibilityMapsPage';
+
 
 const Layout = ({ onLogout }) => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  // Changed default active tab to vendor-management
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('vendor-information');
 
   const toggleSidebar = () => {
     setSidebarCollapsed(!sidebarCollapsed);
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    // Auto-close mobile menu when selecting a tab
+    if (window.innerWidth < 768) {
+      setIsMobileMenuOpen(false);
+    }
   };
 
   // Function to render content based on active tab
@@ -84,95 +98,56 @@ const Layout = ({ onLogout }) => {
       case 'smb-existing-customer-details':
         return <SMBExistingCustomerDetails />;
       case 'smb-summary':
-      return <SMBSummary />;
-
+        return <SMBSummary />;
+      case 'restore-order':
+        return <RestoreOrderForm />;
+      case 'feasibility-maps':
+        return <FeasibilityMapsPage />;
        
       default:
-        // Default to vendor-management instead of new-customer
         return <VendorInfoDisplay />;
     }
   };
 
-  // Function to get page title based on active tab
-  const getPageTitle = () => {
-    switch (activeTab) {
-      case 'new-customer':
-        return 'Customer Order Management System';
-      case 'new-corporate':
-        return 'Corporate Customer Order System';
-      case 'existing-customer':
-        return 'Existing Customer Order System';
-      case 'corporate-orders':
-        return 'Corporate Customer Orders System';
-      case 'new-ff':
-        return 'FF Customer Order System';
-      case 'order-details':
-        return 'Order Details Management System';
-      case 'tpn-rd-ids':
-        return 'TPN/RD IDs Management System';
-      case 'user-management':
-        return 'User Management System';
-      case 'vendor-information':
-        return 'Vendor Information Dashboard';
-      case 'dds':
-        return 'DDS Management System';
-      case 'dds-new-customer':
-        return 'DDS New Customer System';
-      case 'dds-existing-customer':
-        return 'DDS Existing Customer System';
-      case 'dds-retailer':
-        return 'DDS Retailer System';
-      case 'dds-new-customer-bulk':
-        return 'DDS New Customer Bulk System';
-      case 'dds-existing-customer-bulk':
-        return 'DDS Existing Customer Bulk System';
-      case 'dds-retailer-details':
-        return 'DDS Retailer Details System';
-      case 'dds-summary':
-        return 'DDS Summary System';
-      case 'smb-dds':
-        return 'SMB DDS Management System';
-      case 'smb-new-customer':
-        return 'SMB New Customer System';
-      case 'smb-existing-customer':
-        return 'SMB Existing Customer System';
-      case 'smb-summary':
-        return 'SMB Summary System';
-      case 'create-user':
-        return 'User Creation System';
-      case 'user-status':
-        return 'User Status Management System';
-      case 'vendor-code':
-        return 'Vendor Code Management System';
-      default:
-        return 'Vendor Information Dashboard';
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex overflow-hidden">
-      {/* Sidebar */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100 flex overflow-hidden">
+      {/* Mobile Backdrop */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Sidebar - Enhanced Mobile Support */}
       <Sidebar 
         collapsed={sidebarCollapsed}
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={handleTabChange}
         toggleSidebar={toggleSidebar}
+        isMobileMenuOpen={isMobileMenuOpen}
+        toggleMobileMenu={toggleMobileMenu}
       />
       
       {/* Main Content */}
       <div className={`flex-1 flex flex-col transition-all duration-300 overflow-hidden ${
-        sidebarCollapsed ? 'ml-12' : 'ml-64'
-      }`}>
+        sidebarCollapsed ? 'md:ml-14' : 'md:ml-60'
+      } ml-0`}>
         
         {/* Top Bar */}
-        <TopBar activeTab={activeTab} onLogout={onLogout} />
+        <TopBar 
+          activeTab={activeTab} 
+          onLogout={onLogout}
+          isMobileMenuOpen={isMobileMenuOpen}
+          toggleMobileMenu={toggleMobileMenu}
+        />
         
         {/* Compact Notice Banner - Only show on vendor-information */}
         {activeTab === 'vendor-information' && (
-          <div className="mx-4 mt-2">
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-l-blue-400 border border-blue-200 rounded-r-lg p-3 shadow-sm">
-              <div className="flex items-center">
-                <div className="w-4 h-4 bg-blue-100 rounded-full flex items-center justify-center mr-2 flex-shrink-0">
+          <div className="mx-2 md:mx-4 mt-2">
+            <div className="bg-gradient-to-r from-blue-50 via-indigo-50 to-blue-50 border-l-4 border-l-blue-500 border border-blue-200 rounded-r-lg p-3 shadow-sm">
+              <div className="flex items-start md:items-center">
+                <div className="w-4 h-4 bg-blue-100 rounded-full flex items-center justify-center mr-2 flex-shrink-0 mt-0.5 md:mt-0">
                   <span className="text-blue-600 text-xs">ℹ️</span>
                 </div>
                 <div>
@@ -192,9 +167,9 @@ const Layout = ({ onLogout }) => {
             {renderContent()}
           </div>
         ) : (
-          // All other pages: centered container with padding
-          <div className="flex-1 p-2 overflow-x-hidden">
-            <div className={`mx-auto ${
+          // All other pages: responsive container with padding
+          <div className="flex-1 p-2 md:p-4 overflow-x-hidden">
+            <div className={`mx-auto w-full ${
               [
                 'new-customer',
                 'create-user',
@@ -207,23 +182,24 @@ const Layout = ({ onLogout }) => {
                 'smb-new-customer',
                 'smb-existing-customer'
               ].includes(activeTab)
-                ? 'max-w-6xl px-4'
-                : 'max-w-4xl'
+                ? 'max-w-7xl px-2 md:px-4'
+                : 'max-w-5xl px-2 md:px-4'
             }`}>
-              {renderContent()}
+              <div className="w-full overflow-x-auto">
+                {renderContent()}
+              </div>
             </div>
           </div>
         )}
         
-        {/* Compact Footer */}
-        <footer className="bg-gradient-to-r from-green-600 to-green-700 text-white py-2 shadow-lg">
-          <div className="px-4">
+        {/* Responsive Footer */}
+        <footer className="bg-gradient-to-t from-green-600 via-green-700 to-teal-700 text-white py-2 md:py-3 shadow-lg">
+          <div className="px-2 md:px-4">
             <div className="text-center">
-              <p className="text-xs">© 2025 PTCL. All rights reserved. Developed & Powered by PTCL IT Team</p>
+              <p className="text-xs md:text-sm">© 2025 PTCL. All rights reserved. Developed & Powered by PTCL IT Team</p>
             </div>
           </div>
         </footer>
-        
       </div>
     </div>
   );

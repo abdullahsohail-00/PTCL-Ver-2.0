@@ -7,326 +7,382 @@ import {
   ChevronsLeft,
   ChevronsRight,
   Building2,
-  Info
+  Info,
+  Users,
+  Database,
+  UserPlus,
+  Activity,
+  FileText,
+  Package,
+  UserCheck,
+  BarChart3,
+  Code,
+  Plus,
+  X,
+  Menu,
+  RotateCcw,
+  Map
 } from 'lucide-react';
 
-const Sidebar = ({ collapsed, activeTab, setActiveTab, toggleSidebar }) => {
-  const [expandedMenu, setExpandedMenu] = useState('orders');
-  // Add state for expanded submenus under Management
+const Sidebar = ({ collapsed, activeTab, setActiveTab, toggleSidebar, isMobileMenuOpen, toggleMobileMenu }) => {
   const [expandedSubmenus, setExpandedSubmenus] = useState({});
 
+  // Navigation items with PTCL dark theme
   const navigationItems = [
+    // Vendor Info Section
     { 
-      id: 'vendor-info', 
-      label: 'Vendor Info', 
+      id: 'vendor-information', 
+      label: 'Vendor Information', 
       icon: Info,
-      color: 'from-blue-500 to-blue-600',
-      submenu: [
-        { id: 'vendor-information', label: 'Vendor Information' }
-      ]
+      color: 'from-green-500 to-green-600',
+      category: 'vendor'
+    },
+    
+    // Orders Section
+    { 
+      id: 'new-customer', 
+      label: 'New Customer Order', 
+      icon: Plus,
+      color: 'from-green-500 to-green-600',
+      category: 'orders'
     },
     { 
-      id: 'orders', 
-      label: 'Orders', 
+      id: 'new-corporate', 
+      label: 'New Corporate Order', 
+      icon: Building2,
+      color: 'from-green-500 to-green-600',
+      category: 'orders'
+    },
+    { 
+      id: 'existing-customer', 
+      label: 'Existing Customer Order', 
+      icon: UserCheck,
+      color: 'from-green-500 to-green-600',
+      category: 'orders'
+    },
+    { 
+      id: 'corporate-orders', 
+      label: 'Corporate Orders', 
+      icon: Package,
+      color: 'from-green-500 to-green-600',
+      category: 'orders'
+    },
+    { 
+      id: 'new-ff', 
+      label: 'New FF Customer Order', 
       icon: ShoppingCart,
       color: 'from-green-500 to-green-600',
-      submenu: [
-        { id: 'new-customer', label: 'New Customer Order' },
-        { id: 'new-corporate', label: 'New Corporate Customer Order' },
-        { id: 'existing-customer', label: 'Existing Customer Order' },
-        { id: 'corporate-orders', label: 'Corporate Customer Orders' },
-        { id: 'new-ff', label: 'New FF Customer Order' }
-      ]
+      category: 'orders'
+    },
+    
+    // Management Section
+    { 
+      id: 'order-details', 
+      label: 'Order Details', 
+      icon: FileText,
+      color: 'from-green-600 to-green-700',
+      category: 'management'
     },
     { 
-      id: 'management', 
-      label: 'Management', 
-      icon: Settings,
-      color: 'from-purple-500 to-purple-600',
+      id: 'tpn-rd-ids', 
+      label: 'TPN/RD IDs', 
+      icon: Database,
+      color: 'from-green-600 to-green-700',
+      category: 'management'
+    },
+    
+    // User Management Subsection
+    { 
+      id: 'user-management', 
+      label: 'User Management', 
+      icon: Users,
+      color: 'from-green-600 to-green-700',
+      category: 'management',
       submenu: [
-        { id: 'order-details', label: 'Order Details' },
-        { id: 'tpn-rd-ids', label: 'TPN/RD IDs' },
-        { 
-          id: 'user-management', 
-          label: 'User Management',
-          submenu: [
-            { id: 'create-user', label: 'Create User' },
-            { id: 'user-status', label: 'User Status' }
-          ]
-        },
-        { 
-          id: 'dds', 
-          label: 'DDS',
-          submenu: [
-            { id: 'dds-new-customer', label: 'DDS New Customer' },
-            { id: 'dds-existing-customers', label: 'DDS Existing Customers' },
-            { id: 'dds-retailer', label: 'DDS Retailer' },
-            { id: 'dds-new-customers-detail', label: 'DDS New Customers Detail' },
-            { id: 'dds-existing-customers-detail', label: 'DDS Existing Customers Detail' },
-            { id: 'dds-retailer-detail', label: 'DDS Retailer Detail' },
-            { id: 'dds-summary', label: 'DDS Summary' }
-          ]
-        },
-        { 
-          id: 'smb-dds', 
-          label: 'SMB DDS',
-          submenu: [
-            { id: 'smb-new-customer', label: 'SMB New Customers' },
-            { id: 'smb-existing-customer', label: 'SMB Existing Customers' },
-            { id: 'smb-new-customer-details', label: 'SMB New Customer Details' },
-            { id: 'smb-existing-customer-details', label: 'SMB Existing Customer Details' },
-            { id: 'smb-summary', label: 'SMB Summary' }
-          ]
-        }
+        { id: 'create-user', label: 'Create User', icon: UserPlus },
+        { id: 'user-status', label: 'User Status', icon: Activity }
       ]
     },
+    
+    // DDS Subsection
     { 
-      id: 'administration', 
-      label: 'Administration', 
-      icon: Shield,
-      color: 'from-red-500 to-red-600',
+      id: 'dds', 
+      label: 'DDS', 
+      icon: BarChart3,
+      color: 'from-green-600 to-green-700',
+      category: 'management',
       submenu: [
-        { id: 'vendor-code', label: 'Insert Vendor Code' }
+        { id: 'dds-new-customer', label: 'New Customer', icon: Plus },
+        { id: 'dds-existing-customers', label: 'Existing Customers', icon: Users },
+        { id: 'dds-retailer', label: 'Retailer', icon: Building2 },
+        { id: 'dds-new-customers-detail', label: 'New Customers Detail', icon: FileText },
+        { id: 'dds-existing-customers-detail', label: 'Existing Customers Detail', icon: FileText },
+        { id: 'dds-retailer-detail', label: 'Retailer Detail', icon: FileText },
+        { id: 'dds-summary', label: 'Summary', icon: BarChart3 }
       ]
+    },
+    
+    // SMB DDS Subsection
+    { 
+      id: 'smb-dds', 
+      label: 'SMB DDS', 
+      icon: Database,
+      color: 'from-green-600 to-green-700',
+      category: 'management',
+      submenu: [
+        { id: 'smb-new-customer', label: 'New Customers', icon: Plus },
+        { id: 'smb-existing-customer', label: 'Existing Customers', icon: Users },
+        { id: 'smb-new-customer-details', label: 'New Customer Details', icon: FileText },
+        { id: 'smb-existing-customer-details', label: 'Existing Customer Details', icon: FileText },
+        { id: 'smb-summary', label: 'Summary', icon: BarChart3 }
+      ]
+    },
+    
+    // Administration Section
+    { 
+      id: 'vendor-code', 
+      label: 'Insert Vendor Code', 
+      icon: Code,
+      color: 'from-green-700 to-green-800',
+      category: 'administration'
+    },
+    { 
+      id: 'restore-order', 
+      label: 'Restore Order', 
+      icon: RotateCcw,
+      color: 'from-green-700 to-green-800',
+      category: 'administration'
+    },
+    { 
+      id: 'feasibility-maps', 
+      label: 'Feasibility Maps', 
+      icon: Map,
+      color: 'from-green-700 to-green-800',
+      category: 'administration'
     }
   ];
 
   const handleMenuClick = (item) => {
     if (item.submenu) {
-      if (collapsed) {
+      // On mobile, don't auto-expand sidebar when clicking submenu
+      if (collapsed && window.innerWidth >= 768) {
         toggleSidebar();
-        setExpandedMenu(item.id);
-      } else {
-        setExpandedMenu(expandedMenu === item.id ? null : item.id);
       }
+      setExpandedSubmenus(prev => ({
+        ...prev,
+        [item.id]: !prev[item.id]
+      }));
     } else {
       setActiveTab(item.id);
+      // Auto-close mobile menu when selecting a tab
+      if (window.innerWidth < 768) {
+        toggleMobileMenu();
+      }
     }
   };
 
   const handleSubMenuClick = (subItem) => {
-    // If submenu has its own submenu, toggle its expansion
-    if (subItem.submenu && (subItem.id === 'user-management' || subItem.id === 'dds' || subItem.id === 'smb-dds')) {
-      setExpandedSubmenus((prev) => ({
-        ...prev,
-        [subItem.id]: !prev[subItem.id],
-      }));
-    } else {
-      setActiveTab(subItem.id);
+    setActiveTab(subItem.id);
+    // Auto-close mobile menu when selecting a sub-tab
+    if (window.innerWidth < 768) {
+      toggleMobileMenu();
     }
-  };
-
-  const isItemActive = (item) => {
-    return activeTab === item.id || item.submenu?.some(sub => {
-      if (sub.submenu) {
-        return sub.submenu.some(subSub => subSub.id === activeTab);
-      }
-      return sub.id === activeTab;
-    });
   };
 
   const isSubItemActive = (subItem) => {
-    if (subItem.submenu) {
-      return subItem.submenu.some(sub => sub.id === activeTab);
-    }
     return activeTab === subItem.id;
   };
 
   return (
-    <div className={`fixed left-0 top-0 h-full bg-white border-r border-gray-200 shadow-lg transition-all duration-300 z-40 flex flex-col ${
-      collapsed ? 'w-12' : 'w-64'
-    }`}>
+    <>
+      {/* Mobile Menu Button - Dark theme with PTCL green */}
+      <button
+        onClick={toggleMobileMenu}
+        className="md:hidden fixed top-4 left-4 z-50 p-2.5 bg-slate-800 text-gray-300 rounded-lg shadow-xl border border-slate-600 hover:bg-slate-700 hover:text-white hover:border-green-500 transition-all duration-300"
+        aria-label="Toggle mobile menu"
+      >
+        <Menu className="w-5 h-5" />
+      </button>
+
+      {/* Mobile Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+          onClick={toggleMobileMenu}
+        />
+      )}
+
+      {/* Sidebar - Dark Professional Theme */}
+      <div className={`fixed left-0 top-0 h-full bg-gradient-to-b from-slate-800 via-slate-900 to-gray-900 border-r border-slate-700 shadow-2xl transition-all duration-300 z-50 flex flex-col
+        ${collapsed ? 'w-16' : 'w-64'} 
+        ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} 
+        md:translate-x-0
+      `}>
       
-      {/* Logo Section */}
-      <div className={`border-b border-gray-200 bg-gradient-to-br from-green-50 to-emerald-50 ${collapsed ? 'p-2' : 'p-3'}`}>
-        {!collapsed && (
-          <div className="flex items-center justify-center">
-            <img 
-              src="https://ptcl.com.pk/images/ptcl-logo-plain.svg" 
-              alt="PTCL Logo" 
-              className="h-8 w-auto object-contain hover:scale-105 transition-transform duration-300"
-              onError={(e) => {
-                // Fallback if logo doesn't load
-                e.target.style.display = 'none';
-                e.target.nextSibling.style.display = 'flex';
-              }}
-            />
-            <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center shadow-md" style={{display: 'none'}}>
-              <Building2 className="w-4 h-4 text-white" />
-            </div>
-          </div>
-        )}
-        
-        {collapsed && (
-          <div className="flex justify-center">
-            <img 
-              src="https://ptcl.com.pk/images/ptcl-logo-plain.svg" 
-              alt="PTCL Logo" 
-              className="h-6 w-auto object-contain hover:scale-110 transition-transform duration-300"
-              onError={(e) => {
-                // Fallback if logo doesn't load
-                e.target.style.display = 'none';
-                e.target.nextSibling.style.display = 'flex';
-              }}
-            />
-            <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center shadow-md hover:shadow-lg transition-shadow duration-300" style={{display: 'none'}}>
-              <Building2 className="w-4 h-4 text-white" />
-            </div>
-          </div>
-        )}
-      </div>
+        {/* Logo Section - PTCL Green Header */}
+        <div className={`border-b border-slate-700 bg-gradient-to-r from-green-600 via-green-500 to-teal-600 ${collapsed ? 'p-3' : 'p-4'} relative`}>
+          {/* Mobile Close Button */}
+          <button
+            onClick={toggleMobileMenu}
+            className="md:hidden absolute top-3 right-3 p-1.5 rounded-md bg-slate-800 hover:bg-slate-700 text-gray-300 hover:text-white transition-colors duration-200 border border-slate-600"
+            aria-label="Close mobile menu"
+          >
+            <X className="w-4 h-4" />
+          </button>
 
-      {/* Navigation Menu - Takes remaining space */}
-      <nav className="flex-1 p-2 space-y-1 overflow-y-auto">
-        {navigationItems.map((item) => (
-          <div key={item.id} className="relative">
-            {/* Main Menu Button */}
-            <button
-              onClick={() => handleMenuClick(item)}
-              className={`group w-full flex items-center rounded-lg transition-all duration-300 transform hover:scale-105 ${
-                collapsed ? 'px-2 py-3 justify-center' : 'px-3 py-2'
-              } ${
-                isItemActive(item)
-                  ? `bg-gradient-to-r ${item.color} text-white shadow-md border border-white border-opacity-30`
-                  : `text-gray-700 hover:bg-gradient-to-r ${item.color} hover:text-white hover:shadow-sm border border-transparent hover:border-white hover:border-opacity-30`
-              }`}
-            >
-              {/* Icon */}
-              <div className={`rounded-md transition-all duration-300 flex items-center justify-center ${
-                collapsed ? 'p-0' : 'p-1.5 mr-2'
-              } ${
-                isItemActive(item)
-                  ? 'bg-white bg-opacity-20' 
-                  : 'bg-gray-100 group-hover:bg-white group-hover:bg-opacity-20'
-              }`}>
-                <item.icon className={`w-4 h-4 transition-colors duration-300 ${
-                  isItemActive(item) 
-                    ? 'text-white' 
-                    : 'text-gray-600 group-hover:text-white'
-                }`} />
+          {!collapsed && (
+            <div className="flex items-center justify-center pr-10 md:pr-0">
+              <img 
+                src="https://ptcl.com.pk/images/ptcl-logo-plain.svg" 
+                alt="PTCL Logo" 
+                className="h-8 w-auto object-contain hover:scale-105 transition-transform duration-300 filter brightness-0 invert"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'flex';
+                }}
+              />
+              <div className="w-8 h-8 bg-gradient-to-br from-white/20 to-white/10 rounded-lg flex items-center justify-center shadow-lg" style={{display: 'none'}}>
+                <Building2 className="w-5 h-5 text-white" />
               </div>
-              
-              {/* Label and Arrow */}
-              {!collapsed && (
-                <>
-                  <span className="font-medium flex-1 text-left text-xs">{item.label}</span>
-                  {item.submenu && (
-                    <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${
-                      expandedMenu === item.id ? 'rotate-180' : ''
-                    }`} />
-                  )}
-                </>
-              )}
-            </button>
+            </div>
+          )}
+          
+          {collapsed && (
+            <div className="flex justify-center">
+              <img 
+                src="https://ptcl.com.pk/images/ptcl-logo-plain.svg" 
+                alt="PTCL Logo" 
+                className="h-7 w-auto object-contain hover:scale-105 transition-transform duration-300 filter brightness-0 invert"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'flex';
+                }}
+              />
+              <div className="w-10 h-10 bg-gradient-to-br from-white/20 to-white/10 rounded-lg flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow duration-300" style={{display: 'none'}}>
+                <Building2 className="w-5 h-5 text-white" />
+              </div>
+            </div>
+          )}
+        </div>
 
-            {/* Submenu */}
-            {item.submenu && !collapsed && expandedMenu === item.id && (
-              <div className="mt-1 ml-4 space-y-0.5 animate-in slide-in-from-top-2 duration-300">
-                {item.submenu.map((subItem) => (
-                  <div key={subItem.id}>
+        {/* Navigation Menu - Dark Theme */}
+        <nav className="flex-1 p-3 space-y-1 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-800">
+          {navigationItems.map((item) => (
+            <div key={item.id} className="relative">
+              {/* Main Menu Button */}
+              <button
+                onClick={() => handleMenuClick(item)}
+                className={`group w-full flex items-center rounded-lg transition-all duration-300 ${
+                  collapsed ? 'px-2 py-3 justify-center' : 'px-3 py-2.5'
+                } ${
+                  activeTab === item.id || (item.submenu && item.submenu.some(sub => sub.id === activeTab))
+                    ? 'bg-gradient-to-r from-green-600 to-green-500 text-white shadow-lg border border-green-400'
+                    : 'text-gray-300 hover:bg-gradient-to-r hover:from-slate-700 hover:to-slate-600 hover:text-white hover:shadow-md border border-slate-600 hover:border-green-500 bg-slate-800/50'
+                }`}
+              >
+                {/* Icon */}
+                <div className={`rounded-md transition-all duration-300 flex items-center justify-center ${
+                  collapsed ? 'p-0' : 'p-1.5 mr-3'
+                } ${
+                  activeTab === item.id || (item.submenu && item.submenu.some(sub => sub.id === activeTab))
+                    ? 'bg-white/20 shadow-inner' 
+                    : 'bg-slate-700/70 group-hover:bg-slate-600/70'
+                }`}>
+                  <item.icon className={`w-4 h-4 transition-all duration-300 ${
+                    activeTab === item.id || (item.submenu && item.submenu.some(sub => sub.id === activeTab))
+                      ? 'text-white' 
+                      : 'text-gray-400 group-hover:text-green-400'
+                  }`} />
+                </div>
+                
+                {/* Label and Arrow */}
+                {!collapsed && (
+                  <>
+                    <span className="font-medium flex-1 text-left text-sm">{item.label}</span>
+                    {item.submenu && (
+                      <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${
+                        expandedSubmenus[item.id] ? 'rotate-180' : ''
+                      }`} />
+                    )}
+                  </>
+                )}
+              </button>
+
+              {/* Submenu */}
+              {item.submenu && !collapsed && expandedSubmenus[item.id] && (
+                <div className="mt-1 ml-6 space-y-1 animate-in slide-in-from-top-2 duration-300">
+                  {item.submenu.map((subItem) => (
                     <button
+                      key={subItem.id}
                       onClick={() => handleSubMenuClick(subItem)}
-                      className={`group w-full flex items-center px-3 py-1.5 rounded-md text-xs transition-all duration-300 transform hover:scale-105 ${
+                      className={`group w-full flex items-center px-3 py-2 rounded-md text-sm transition-all duration-300 ${
                         isSubItemActive(subItem)
-                          ? `bg-gradient-to-r ${item.color} text-white shadow-sm font-medium`
-                          : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800 hover:shadow-sm'
+                          ? 'bg-gradient-to-r from-green-600 to-green-500 text-white shadow-md font-medium border border-green-400'
+                          : 'text-gray-400 hover:bg-slate-700/70 hover:text-gray-200 border border-slate-600 hover:border-slate-500 bg-slate-800/30'
                       }`}
                     >
-                      <div className={`w-1.5 h-1.5 rounded-full mr-2 transition-all duration-300 ${
-                        isSubItemActive(subItem) 
-                          ? 'bg-white' 
-                          : 'bg-gray-300 group-hover:bg-gray-400'
-                      }`} />
+                      <div className={`rounded-sm p-1.5 mr-3 transition-all duration-300 ${
+                        isSubItemActive(subItem)
+                          ? 'bg-white/20' 
+                          : 'bg-slate-700/50 group-hover:bg-slate-600/50'
+                      }`}>
+                        {subItem.icon && <subItem.icon className={`w-3.5 h-3.5 ${
+                          isSubItemActive(subItem) ? 'text-white' : 'text-gray-400 group-hover:text-green-400'
+                        }`} />}
+                      </div>
                       <span className="font-medium truncate flex-1 text-left">{subItem.label}</span>
-                      {/* Chevron for submenus */}
-                      {(subItem.id === 'user-management' || subItem.id === 'dds' || subItem.id === 'smb-dds') && subItem.submenu && (
-                        <ChevronDown className={`w-3 h-3 ml-1 transition-transform duration-300 ${
-                          expandedSubmenus[subItem.id] ? 'rotate-180' : ''
-                        }`} />
-                      )}
                     </button>
-                    {/* Sub-submenu for User Management, DDS, SMB DDS */}
-                    {(subItem.id === 'user-management' || subItem.id === 'dds' || subItem.id === 'smb-dds') && subItem.submenu && expandedSubmenus[subItem.id] && (
-                      <div className="mt-0.5 ml-6 space-y-0.5">
-                        {subItem.submenu.map((subSubItem) => (
+                  ))}
+                </div>
+              )}
+
+              {/* Tooltip for Collapsed State */}
+              {collapsed && (
+                <div className="absolute left-full top-0 ml-2 hidden group-hover:block z-50 md:block">
+                  <div className="bg-slate-800 text-gray-300 rounded-lg py-3 px-4 shadow-2xl border border-slate-600 min-w-52">
+                    <div className="font-semibold mb-2 text-green-400 text-sm border-b border-slate-600 pb-2">
+                      {item.label}
+                    </div>
+                    {item.submenu && (
+                      <div className="space-y-1 mt-2">
+                        {item.submenu.map((subItem) => (
                           <button
-                            key={subSubItem.id}
-                            onClick={() => handleSubMenuClick(subSubItem)}
-                            className={`group w-full flex items-center px-3 py-1 rounded-md text-xs transition-all duration-300 transform hover:scale-105 ${
-                              activeTab === subSubItem.id
-                                ? `bg-gradient-to-r ${item.color} text-white shadow-sm font-medium`
-                                : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
-                            }`}
+                            key={subItem.id}
+                            onClick={() => handleSubMenuClick(subItem)}
+                            className="flex items-center w-full text-left py-2 px-3 text-sm hover:text-green-400 hover:bg-slate-700 transition-colors rounded-md"
                           >
-                            <div className={`w-1 h-1 rounded-full mr-2 transition-all duration-300 ${
-                              activeTab === subSubItem.id 
-                                ? 'bg-white' 
-                                : 'bg-gray-300 group-hover:bg-gray-400'
-                            }`} />
-                            <span className="font-medium truncate text-left">{subSubItem.label}</span>
+                            {subItem.icon && <subItem.icon className="w-4 h-4 mr-3 text-gray-400" />}
+                            {subItem.label}
                           </button>
                         ))}
                       </div>
                     )}
                   </div>
-                ))}
-              </div>
-            )}
-
-            {/* Tooltip for Collapsed State */}
-            {collapsed && item.submenu && (
-              <div className="absolute left-full top-0 ml-2 hidden group-hover:block z-50">
-                <div className="bg-gray-900 text-white rounded-lg py-2 px-3 shadow-xl min-w-44 border border-gray-700">
-                  <div className="font-medium mb-2 text-green-300 text-xs border-b border-gray-700 pb-1">
-                    {item.label}
-                  </div>
-                  <div className="space-y-1">
-                    {item.submenu.map((subItem) => (
-                      <div key={subItem.id}>
-                        <button
-                          onClick={() => subItem.submenu ? null : handleSubMenuClick(subItem)}
-                          className="block w-full text-left py-1 px-2 text-xs hover:text-green-300 hover:bg-gray-800 transition-colors rounded"
-                        >
-                          {subItem.label}
-                        </button>
-                        {subItem.submenu && (
-                          <div className="ml-4 mt-1">
-                            {subItem.submenu.map((subSubItem) => (
-                              <button
-                                key={subSubItem.id}
-                                onClick={() => handleSubMenuClick(subSubItem)}
-                                className="block w-full text-left py-0.5 px-2 text-xs text-gray-400 hover:text-green-200 hover:bg-gray-700 transition-colors rounded"
-                              >
-                                → {subSubItem.label}
-                              </button>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
                 </div>
+              )}
+            </div>
+          ))}
+        </nav>
+
+        {/* Collapse Toggle Button */}
+        <div className="border-t border-slate-700 p-3">
+          <button
+            onClick={toggleSidebar}
+            className={`w-full flex items-center justify-center ${collapsed ? 'p-2.5' : 'p-2.5'} rounded-lg bg-gradient-to-r from-slate-700 to-slate-600 hover:from-green-600 hover:to-green-500 transition-all duration-300 group border border-slate-600 hover:border-green-500 shadow-lg text-gray-300 hover:text-white`}
+            title={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+          >
+            {collapsed ? (
+              <ChevronsRight className="w-5 h-5 transition-colors duration-300" />
+            ) : (
+              <div className="flex items-center">
+                <ChevronsLeft className="w-5 h-5 transition-colors duration-300 mr-3" />
+                <span className="text-sm font-medium">Collapse</span>
               </div>
             )}
-          </div>
-        ))}
-      </nav>
-
-      {/* Collapse Toggle Button - Logo Only */}
-      <div className="border-t border-gray-200 p-2">
-        <button
-          onClick={toggleSidebar}
-          className={`w-full flex items-center justify-center ${collapsed ? 'p-3' : 'p-1.5'} rounded-lg bg-gradient-to-r from-gray-100 to-gray-200 hover:from-green-100 hover:to-green-200 transition-all duration-300 transform hover:scale-105 group border border-transparent hover:border-green-300`}
-          title={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
-        >
-          {collapsed ? (
-            <ChevronsRight className="w-5 h-5 text-gray-600 group-hover:text-green-600 transition-colors duration-300" />
-          ) : (
-            <ChevronsLeft className="w-5 h-5 text-gray-600 group-hover:text-green-600 transition-colors duration-300" />
-          )}
-        </button>
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

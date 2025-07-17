@@ -26,19 +26,19 @@ const VendorInfoDisplay = () => {
   };
 
   const DisplayField = ({ label, value }) => (
-    <div className="bg-white rounded border border-gray-200 p-2 hover:shadow-sm transition-shadow duration-200">
-      <label className="block text-xs font-medium text-gray-600 mb-0.5">
+    <div className="bg-white rounded border border-slate-200 p-2 hover:shadow-sm hover:border-green-300 transition-shadow duration-200">
+      <label className="block text-xs font-medium text-slate-600 mb-0.5">
         {label}
       </label>
-      <div className="text-xs font-semibold text-gray-900 truncate">
+      <div className="text-xs font-semibold text-slate-900 truncate">
         {value || '-'}
       </div>
     </div>
   );
 
   const StatusBadge = ({ active }) => (
-    <div className="bg-white rounded border border-gray-200 p-2 hover:shadow-sm transition-shadow duration-200">
-      <label className="block text-xs font-medium text-gray-600 mb-0.5">Status</label>
+    <div className="bg-white rounded border border-slate-200 p-2 hover:shadow-sm hover:border-green-300 transition-shadow duration-200">
+      <label className="block text-xs font-medium text-slate-600 mb-0.5">Status</label>
       <div className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
         active 
           ? 'bg-green-100 text-green-800' 
@@ -55,23 +55,9 @@ const VendorInfoDisplay = () => {
   return (
     <div className="w-full">
       {/* Ultra Compact Header */}
-      <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-t p-3 text-white shadow-md">
+      <div className="bg-gradient-to-t from-green-500 via-green-600 to-teal-600 rounded-t p-3 text-white shadow-md">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center">
-            <img 
-              src="https://ptcl.com.pk/images/ptcl-logo-plain.svg" 
-              alt="PTCL Logo" 
-              className="h-6 w-auto object-contain bg-white p-1 rounded"
-              onError={(e) => {
-                e.target.style.display = 'none';
-                e.target.nextSibling.style.display = 'flex';
-              }}
-            />
-            <div className="w-6 h-6 bg-white bg-opacity-20 rounded flex items-center justify-center" style={{display: 'none'}}>
-              <User className="w-3 h-3" />
-            </div>
-          </div>
+          {/* Logo - removed as per request */}
           
           {/* Title */}
           <div className="flex-1 text-center">
@@ -79,20 +65,16 @@ const VendorInfoDisplay = () => {
             <p className="text-green-100 text-xs">Read-only display for verification purposes</p>
           </div>
           
-          {/* Security Badge */}
-          <div className="flex items-center space-x-1 bg-white bg-opacity-20 px-2 py-1 rounded-full">
-            <Shield className="w-3 h-3" />
-            <span className="text-xs">Secured</span>
-          </div>
+          {/* Security Badge - removed as per request */}
         </div>
       </div>
       
       {/* Ultra Compact Form Content */}
-      <div className="bg-gray-50 border-x border-b border-gray-200 rounded-b shadow-md">
+      <div className="bg-gradient-to-br from-slate-50 to-gray-50 border-x border-b border-slate-200 rounded-b shadow-md">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
           
           {/* Left Column */}
-          <div className="border-r border-gray-200">
+          <div className="border-r border-slate-200">
             {/* Personal Information */}
             <FormSection title="Personal Information" icon={User}>
               <DisplayField label="Full Name" value={vendorData.fullName} />
