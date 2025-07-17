@@ -92,8 +92,3 @@ public/
 
 This project is licensed under the MIT License.
 
-## Contact
-
-For questions or support, please contact:
-- Sohail Iftikhar (Project Owner)
-- [Your Email Here]
