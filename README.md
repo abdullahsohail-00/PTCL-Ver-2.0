@@ -1,70 +1,99 @@
-# Getting Started with Create React App
+# PTCL-Ver-3.0
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+**PTCL-Ver-3.0** is a modern web-based administration and management dashboard for PTCL, designed to streamline vendor management, order processing, user administration, and service feasibility mapping. Built with React and Tailwind CSS, the platform provides a responsive and user-friendly interface for internal operations.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **Vendor Management:** View, verify, and manage vendor information.
+- **Order Processing:** Create and manage orders for existing and new customers, including corporate and SMB clients.
+- **User Administration:** Manage user accounts, statuses, and permissions.
+- **Feasibility Maps:** Visualize service coverage and availability.
+- **Reporting & Summaries:** Access detailed summaries and export data for SMB and DDS operations.
+- **Secure Access:** Role-based access and secure authentication.
+- **Responsive Design:** Optimized for desktop and mobile devices.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Project Structure
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```
+src/
+  components/
+    administration/
+    layout/
+    management/
+    orders/
+    vendorinformation/
+    ...
+  App.js
+  index.js
+  ...
+public/
+  ...
+```
 
-### `npm test`
+## Getting Started
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Prerequisites
 
-### `npm run build`
+- Node.js (v14 or higher recommended)
+- npm (v6 or higher)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Installation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/your-username/PTCL-Ver-3.0.git
+   cd PTCL-Ver-3.0
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. **Install dependencies:**
+   ```sh
+   npm install
+   ```
 
-### `npm run eject`
+3. **Start the development server:**
+   ```sh
+   npm start
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+4. **Build for production:**
+   ```sh
+   npm run build
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Usage
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Access the dashboard at `http://localhost:3000` after running the development server.
+- Use the sidebar to navigate between different modules (Vendor Info, Orders, User Management, Feasibility Maps, etc.).
+- Only authorized users can access certain administrative features.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Technologies Used
 
-## Learn More
+- **React** – Frontend library for building user interfaces
+- **Tailwind CSS** – Utility-first CSS framework for rapid UI development
+- **Node.js & npm** – JavaScript runtime and package manager
+- **Other dependencies:** (see `package.json` for full list)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Customization
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Update theme and styles via `tailwind.config.js`.
+- Add or modify components in the `src/components/` directory.
 
-### Code Splitting
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/YourFeature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin feature/YourFeature`)
+5. Create a new Pull Request
 
-### Analyzing the Bundle Size
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+This project is licensed under the MIT License.
 
-### Making a Progressive Web App
+## Contact
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+For questions or support, please contact:
+- Sohail Iftikhar (Project Owner)
+- [Your Email Here]
