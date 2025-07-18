@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { User, MapPin, CreditCard, Settings, Shield, Search, Calendar, Filter, Download, Eye, CheckCircle, XCircle, Clock, Truck, Package } from 'lucide-react';
+import { Search, Filter, Eye, CheckCircle, XCircle, Clock } from 'lucide-react';
+import ResultsTable from '../common/ResultsTable';
 
 const OrderDetailsPage = () => {
   const [filters, setFilters] = useState({
@@ -10,7 +11,6 @@ const OrderDetailsPage = () => {
   });
 
   const [showOrderDetails, setShowOrderDetails] = useState(false);
-  const [selectedOrders, setSelectedOrders] = useState([]);
 
   // Add custom styles for scrollbar
   useEffect(() => {
@@ -165,7 +165,8 @@ const OrderDetailsPage = () => {
     }
   ];
 
-  const getStatusBadge = (status) => {
+  // Utility badge/icon helpers must be declared before they're used in rows mapping
+  function getStatusBadge(status) {
     const baseClasses = "px-2 py-1 rounded-full text-xs font-medium";
     switch (status.toLowerCase()) {
       case 'approved':
@@ -177,9 +178,9 @@ const OrderDetailsPage = () => {
       default:
         return `${baseClasses} bg-gray-100 text-gray-800`;
     }
-  };
+  }
 
-  const getStatusIcon = (status) => {
+  function getStatusIcon(status) {
     switch (status.toLowerCase()) {
       case 'approved':
         return <CheckCircle className="w-3 h-3 text-green-600" />;
@@ -190,150 +191,50 @@ const OrderDetailsPage = () => {
       default:
         return <Clock className="w-3 h-3 text-gray-600" />;
     }
-  };
+  }
 
-  const PendingOrdersTable = () => (
-    <div className="w-full bg-white rounded-lg border border-gray-200 mb-6">
-      <div className="bg-gray-100 px-4 py-2 border-b border-gray-200">
-        <h3 className="text-sm font-semibold text-gray-800 flex items-center">
-          <Clock className="w-4 h-4 mr-2 text-orange-600" />
-          Pending Orders
-        </h3>
-      </div>
-      
-      <div className="w-full overflow-x-auto custom-table-scroll" style={{ maxHeight: '400px' }}>
-        <table className="w-full" style={{ minWidth: '900px' }}>
-          <thead className="bg-green-500 text-white sticky top-0 z-10">
-            <tr>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase">Name</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase">CNIC</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase">Email</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase">Mobile</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase">City</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase">Order By</th>
-              <th className="px-4 py-3 text-center text-xs font-semibold uppercase">Action</th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {pendingOrdersData.map((order, index) => (
-              <tr key={order.id} className={`hover:bg-gray-50 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
-                <td className="px-4 py-3 text-xs font-medium text-gray-900 whitespace-nowrap">{order.name}</td>
-                <td className="px-4 py-3 text-xs text-gray-600 whitespace-nowrap">{order.cnic}</td>
-                <td className="px-4 py-3 text-xs text-blue-600 hover:text-blue-800 whitespace-nowrap">{order.email}</td>
-                <td className="px-4 py-3 text-xs text-gray-600 whitespace-nowrap">{order.mobile}</td>
-                <td className="px-4 py-3 text-xs text-gray-600 whitespace-nowrap">{order.city}</td>
-                <td className="px-4 py-3 text-xs text-gray-600 whitespace-nowrap">{order.orderBy}</td>
-                <td className="px-4 py-3 text-center whitespace-nowrap">
-                  <button className="bg-green-100 hover:bg-green-200 text-green-700 px-3 py-1 rounded text-xs font-medium inline-flex items-center">
-                    <Eye className="w-3 h-3 mr-1" />
-                    View
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+  // === Columns & rows for shared tables ===
+  const pendingColumns = [
+    { key: 'name', label: 'Name' },
+    { key: 'cnic', label: 'CNIC' },
+    { key: 'email', label: 'Email' },
+    { key: 'mobile', label: 'Mobile' },
+    { key: 'city', label: 'City' },
+    { key: 'orderBy', label: 'Order By' }
+  ];
 
-  const DetailedOrdersTable = () => (
-    <div className="w-full bg-white rounded-lg border border-gray-200 mb-6">
-      <div className="bg-gray-100 px-4 py-2 border-b border-gray-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-        <h3 className="text-sm font-semibold text-gray-800 flex items-center">
-          <Package className="w-4 h-4 mr-2 text-blue-600" />
-          Order Details
-        </h3>
-        <button
-          onClick={handleExportToExcel}
-          className="bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1 rounded text-xs font-medium flex items-center"
-        >
-          <Download className="w-3 h-3 mr-1" />
-          Export to Excel
-        </button>
-      </div>
-      
-      <div className="w-full overflow-x-auto custom-table-scroll" style={{ maxHeight: '400px' }}>
-        <table className="w-full" style={{ minWidth: '1800px' }}>
-          <thead className="bg-green-500 text-white sticky top-0 z-10">
-            <tr>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">Name</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">CNIC</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">Email</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">Mobile</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">City</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">Order Status</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">Approved By</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">Approval Date</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">Remarks</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">Error Message</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">Order ID</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">Status</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">Offer Selected</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">Previous Operator</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">Previous Operator's SOP</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">CNIC</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">Utility Bill</th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {detailedOrdersData.map((order, index) => (
-              <tr key={order.id} className={`hover:bg-gray-50 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
-                <td className="px-3 py-3 text-xs font-medium text-gray-900 whitespace-nowrap">{order.name}</td>
-                <td className="px-3 py-3 text-xs text-gray-600 whitespace-nowrap">{order.cnic}</td>
-                <td className="px-3 py-3 text-xs text-blue-600 hover:text-blue-800 whitespace-nowrap">{order.email}</td>
-                <td className="px-3 py-3 text-xs text-gray-600 whitespace-nowrap">{order.mobile}</td>
-                <td className="px-3 py-3 text-xs text-gray-600 whitespace-nowrap">{order.city}</td>
-                <td className="px-3 py-3 whitespace-nowrap">
-                  <div className="flex items-center space-x-1">
-                    {getStatusIcon(order.orderStatus)}
-                    <span className={getStatusBadge(order.orderStatus)}>
-                      {order.orderStatus}
-                    </span>
-                  </div>
-                </td>
-                <td className="px-3 py-3 text-xs text-gray-600 whitespace-nowrap">{order.approvedBy}</td>
-                <td className="px-3 py-3 text-xs text-gray-600 whitespace-nowrap">{order.approvalDate}</td>
-                <td className="px-3 py-3 text-xs text-gray-600 whitespace-nowrap">
-                  <div className="max-w-[200px]" title={order.remarks}>
-                    {order.remarks}
-                  </div>
-                </td>
-                <td className="px-3 py-3 text-xs text-gray-600 whitespace-nowrap">{order.errorMessage || '-'}</td>
-                <td className="px-3 py-3 text-xs text-blue-600 font-medium whitespace-nowrap">{order.orderId || '-'}</td>
-                <td className="px-3 py-3 whitespace-nowrap">
-                  <span className={getStatusBadge(order.status)}>
-                    {order.status}
-                  </span>
-                </td>
-                <td className="px-3 py-3 text-xs text-gray-600 whitespace-nowrap">
-                  <div className="max-w-[200px]" title={order.offerSelected}>
-                    {order.offerSelected}
-                  </div>
-                </td>
-                <td className="px-3 py-3 text-xs text-gray-600 whitespace-nowrap">{order.previousOperator}</td>
-                <td className="px-3 py-3 whitespace-nowrap">
-                  <button className="bg-green-100 hover:bg-green-200 text-green-700 px-2 py-1 rounded text-xs font-medium">
-                    {order.previousOperatorSOP}
-                  </button>
-                </td>
-                <td className="px-3 py-3 whitespace-nowrap">
-                  <button className="bg-blue-100 hover:bg-blue-200 text-blue-700 px-2 py-1 rounded text-xs font-medium">
-                    {order.previousOperatorCNIC}
-                  </button>
-                </td>
-                <td className="px-3 py-3 whitespace-nowrap">
-                  <button className="bg-purple-100 hover:bg-purple-200 text-purple-700 px-2 py-1 rounded text-xs font-medium">
-                    {order.previousOperatorUtilityBill}
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+  const pendingRows = pendingOrdersData.map((o)=>o);
+
+  // Detailed orders columns/rows
+  const detailedColumns = [
+    { key: 'name', label: 'Name' },
+    { key: 'cnic', label: 'CNIC' },
+    { key: 'email', label: 'Email' },
+    { key: 'mobile', label: 'Mobile' },
+    { key: 'city', label: 'City' },
+    { key: 'orderStatusContent', label: 'Order Status' },
+    { key: 'approvedBy', label: 'Approved By' },
+    { key: 'approvalDate', label: 'Approval Date' },
+    { key: 'remarks', label: 'Remarks' },
+    { key: 'errorMessage', label: 'Error Message' },
+    { key: 'orderId', label: 'Order ID' },
+    { key: 'statusBadge', label: 'Status' },
+    { key: 'offerSelected', label: 'Offer Selected' },
+    { key: 'previousOperator', label: 'Previous Operator' },
+    { key: 'previousOperatorSOP', label: "Prev Op's SOP" },
+    { key: 'previousOperatorCNIC', label: 'CNIC' },
+    { key: 'previousOperatorUtilityBill', label: 'Utility Bill' }
+  ];
+
+  const detailedRows = detailedOrdersData.map((o)=>({
+    ...o,
+    orderStatusContent: (
+      <div className="flex items-center space-x-1">{getStatusIcon(o.orderStatus)}<span className="text-xs">{o.orderStatus}</span></div>
+    ),
+    statusBadge: (
+      <span className={getStatusBadge(o.status)}>{o.status}</span>
+    )
+  }));
 
   return (
     <div className="h-full w-full flex flex-col bg-gray-50">
@@ -425,8 +326,21 @@ const OrderDetailsPage = () => {
           </div>
         ) : (
           <div className="p-4 overflow-auto">
-            <PendingOrdersTable />
-            <DetailedOrdersTable />
+            {/* Pending Orders */}
+            <ResultsTable
+              columns={pendingColumns}
+              rows={pendingRows}
+              renderActions={()=>(
+                <button className="bg-green-100 hover:bg-green-200 text-green-700 px-2 py-1 rounded text-xs font-medium inline-flex items-center"><Eye className="w-3 h-3 mr-1"/>View</button>
+              )}
+              pagination={{ currentPage:1,totalPages:1 }}
+            />
+            {/* Detailed Orders */}
+            <ResultsTable
+              columns={detailedColumns}
+              rows={detailedRows}
+              pagination={{ currentPage:1,totalPages:1 }}
+            />
           </div>
         )}
       </div>

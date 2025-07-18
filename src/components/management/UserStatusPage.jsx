@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { User, Search, Download, Shield, CheckCircle, XCircle } from 'lucide-react';
+import HeaderSection from '../common/HeaderSection';
+import SearchBar from '../common/SearchBar';
+import ResultsTable from '../common/ResultsTable';
 
 const UserStatusPage = () => {
   const [searchCriteria, setSearchCriteria] = useState({
@@ -229,6 +232,19 @@ const UserStatusPage = () => {
     }
   ];
 
+  const columns = [
+    { key: 'status', label: 'Status', className: 'text-center' },
+    { key: 'tpn', label: 'TPN' },
+    { key: 'username', label: 'Username' },
+    { key: 'cnic', label: 'CNIC' },
+    { key: 'cellNumber', label: 'Cell Number' },
+    { key: 'region', label: 'Region' },
+    { key: 'exchangeId', label: 'Exchange ID' },
+    { key: 'tpnCode', label: 'TPN Code' },
+    { key: 'date', label: 'Date' },
+    { key: 'statusText', label: 'Status', className: 'text-center' },
+  ];
+
   const getStatusBadge = (status) => {
     const baseClasses = "px-2 py-1 rounded-full text-xs font-medium inline-flex items-center";
     if (status === "Active") {
@@ -248,74 +264,11 @@ const UserStatusPage = () => {
     }
   };
 
-  const ResultsTable = () => (
-    <div className="w-full bg-white rounded-lg border border-gray-200 mb-6">
-      <div className="w-full overflow-x-auto custom-table-scroll" style={{ maxHeight: '600px' }}>
-        <table className="w-full" style={{ minWidth: '1400px' }}>
-          <thead className="bg-green-500 text-white sticky top-0 z-10">
-            <tr>
-              <th className="px-3 py-3 text-center text-xs font-semibold uppercase" style={{width: '80px'}}>Status</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">TPN</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">Username</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">CNIC</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">Cell Number</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">Region</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">Exchange ID</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">TPN Code</th>
-              <th className="px-3 py-3 text-left text-xs font-semibold uppercase">Date</th>
-              <th className="px-3 py-3 text-center text-xs font-semibold uppercase">Status</th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {userData.map((user, index) => (
-              <tr key={index} className={`hover:bg-gray-50 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
-                <td className="px-3 py-3 text-center">
-                  {getStatusBadge(user.status)}
-                </td>
-                <td className="px-3 py-3 text-xs font-medium text-gray-900 whitespace-nowrap">{user.tpn}</td>
-                <td className="px-3 py-3 text-xs text-gray-600 whitespace-nowrap">{user.username}</td>
-                <td className="px-3 py-3 text-xs text-gray-600 whitespace-nowrap">{user.cnic}</td>
-                <td className="px-3 py-3 text-xs text-gray-600 whitespace-nowrap">{user.cellNumber}</td>
-                <td className="px-3 py-3 text-xs text-gray-600">{user.region || '-'}</td>
-                <td className="px-3 py-3 text-xs text-gray-600">{user.exchangeId || '-'}</td>
-                <td className="px-3 py-3 text-xs text-gray-600 whitespace-nowrap">{user.tpnCode}</td>
-                <td className="px-3 py-3 text-xs text-gray-600 whitespace-nowrap">{user.date}</td>
-                <td className="px-3 py-3 text-center">
-                  <span className="text-xs text-red-600 font-medium">{user.statusText}</span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      
-      {/* Pagination */}
-      <div className="bg-gray-50 px-4 py-3 border-t border-gray-200 flex items-center justify-center">
-        <div className="flex space-x-1">
-          <button className="px-3 py-1 text-xs bg-green-500 text-white rounded">1</button>
-          <button className="px-3 py-1 text-xs text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded">2</button>
-          <button className="px-3 py-1 text-xs text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded">3</button>
-          <button className="px-3 py-1 text-xs text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded">4</button>
-          <button className="px-3 py-1 text-xs text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded">5</button>
-          <span className="px-3 py-1 text-xs text-gray-500">...</span>
-          <button className="px-3 py-1 text-xs text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded">10</button>
-        </div>
-      </div>
-    </div>
-  );
-
   return (
     <div className="h-full w-full flex flex-col bg-gray-50">
       {/* Header */}
-      <div className="bg-gradient-to-t from-green-500 via-green-600 to-teal-600 rounded-t p-3 text-white shadow-md mx-4 mt-4">
-        <div className="flex items-center justify-between">
-          
-          <div className="flex-1 text-center px-2">
-            <h1 className="text-sm font-bold">User Status</h1>
-            <p className="text-green-100 text-xs hidden sm:block">View and manage user account status</p>
-          </div>
-          
-        </div>
+      <div className="mx-4 mt-4">
+        <HeaderSection title="User Status" subtitle="View and manage user account status" />
       </div>
 
       {/* Main Content */}
@@ -325,13 +278,11 @@ const UserStatusPage = () => {
           <div className="flex flex-wrap items-end gap-4 justify-center">
             {/* Username Search */}
             <div className="w-full max-w-md">
-              <label className="block text-xs font-medium text-gray-700 mb-1">Username:</label>
-              <input
-                type="text"
+              <SearchBar
+                label="Username:"
                 value={searchCriteria.username}
-                onChange={(e) => handleSearchChange(e.target.value)}
+                onChange={handleSearchChange}
                 placeholder="Enter username to search"
-                className="w-full px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500"
               />
             </div>
 
@@ -354,7 +305,15 @@ const UserStatusPage = () => {
           </div>
         ) : (
           <div className="p-4 overflow-auto">
-            <ResultsTable />
+            <ResultsTable
+              columns={columns}
+              rows={userData.map(user => ({
+                ...user,
+                status: getStatusBadge(user.status),
+                statusText: <span className="text-xs text-red-600 font-medium">{user.statusText}</span>,
+              }))}
+              pagination={{ currentPage: 1, totalPages: 10 }}
+            />
           </div>
         )}
       </div>

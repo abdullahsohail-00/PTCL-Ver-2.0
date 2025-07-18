@@ -3,6 +3,7 @@ import {
   User, MapPin, CreditCard, Settings, Shield, Building,
   CheckCircle, AlertCircle
 } from 'lucide-react';
+import SectionWrapper from '../../common/SectionWrapper';
 
 const InputField = ({
   label, value, onChange, type = 'text', required = false,
@@ -52,18 +53,6 @@ const InputField = ({
           <span className="text-xs">{error}</span>
         </div>
       )}
-    </div>
-  </div>
-);
-
-const FormSection = ({ title, icon: Icon, children }) => (
-  <div className="bg-white border-b border-gray-200 p-3">
-    <div className="flex items-center mb-3">
-      <Icon className="w-4 h-4 text-green-600 mr-2" />
-      <h3 className="text-sm font-semibold text-gray-800">{title}</h3>
-    </div>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-      {children}
     </div>
   </div>
 );
@@ -188,7 +177,7 @@ const SMBExistingCustomerForm = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
           {/* Left Column - Business Information */}
           <div className="border-r border-gray-200">
-            <FormSection title="Business Information" icon={Building}>
+            <SectionWrapper title="Business Information" icon={Building}>
               <InputField label="Region Name" value={formData.regionName} onChange={(val) => handleInputChange('regionName', val)} options={['AJK', 'Punjab', 'Sindh', 'KPK', 'Balochistan']} />
               <InputField label="Exchange" value={formData.exchange} onChange={(val) => handleInputChange('exchange', val)} options={['Select Exchange Name', 'LAH-001', 'KHI-002', 'ISB-003', 'RWP-004', 'FSD-005']} />
               <InputField label="Area Code" value={formData.areaCode} onChange={(val) => handleInputChange('areaCode', val)} placeholder="Enter Area Code" />
@@ -197,9 +186,9 @@ const SMBExistingCustomerForm = () => {
               <InputField label="Business Name" value={formData.businessName} onChange={(val) => handleInputChange('businessName', val)} required placeholder="Enter Business Name" error={errors.businessName} />
               <InputField label="No Of Employees Working" value={formData.noOfEmployeesWorking} onChange={(val) => handleInputChange('noOfEmployeesWorking', val)} type="number" placeholder="Enter number of employees" />
               <InputField label="Industrial Segment" value={formData.industrialSegment} onChange={(val) => handleInputChange('industrialSegment', val)} options={['Information Technology', 'Manufacturing', 'Retail', 'Healthcare', 'Education', 'Finance']} />
-            </FormSection>
+            </SectionWrapper>
 
-            <FormSection title="Service Information" icon={Settings}>
+            <SectionWrapper title="Service Information" icon={Settings}>
               <InputField label="SMB Products Pitched" value={formData.smbProductsPitched} onChange={(val) => handleInputChange('smbProductsPitched', val)} options={['Static IP sold', 'Dynamic IP', 'Fiber Connection', 'Dedicated Line']} />
               <InputField label="Service Issues" value={formData.serviceIssues} onChange={(val) => handleInputChange('serviceIssues', val)} options={['Frequent disconnection', 'Slow speed', 'No connection', 'Billing issues', 'Technical support']} />
               <InputField label="Customer Satisfaction" value={formData.customerSatisfaction} onChange={(val) => handleInputChange('customerSatisfaction', val)} options={['Yes', 'No', 'Partially']} />
@@ -207,26 +196,26 @@ const SMBExistingCustomerForm = () => {
               <div className="md:col-span-2">
                 <InputField label="Value For Money" value={formData.valueForMoney} onChange={(val) => handleInputChange('valueForMoney', val)} placeholder="Enter value assessment" />
               </div>
-            </FormSection>
+            </SectionWrapper>
           </div>
 
           {/* Right Column - Contact Information & Location */}
           <div>
-            <FormSection title="Contact Information" icon={User}>
+            <SectionWrapper title="Contact Information" icon={User}>
               <InputField label="Mobile No" value={formData.mobileNo} onChange={(val) => handleInputChange('mobileNo', val)} type="tel" placeholder="03XX-XXXXXXX" required error={errors.mobileNo} />
               <InputField label="Email ID" value={formData.emailId} onChange={(val) => handleInputChange('emailId', val)} type="email" placeholder="example@email.com" required error={errors.emailId} />
               <div className="md:col-span-2">
                 <InputField label="Address" value={formData.address} onChange={(val) => handleInputChange('address', val)} placeholder="Enter complete address" isTextArea />
               </div>
-            </FormSection>
+            </SectionWrapper>
 
-            <FormSection title="Location Details" icon={MapPin}>
+            <SectionWrapper title="Location Details" icon={MapPin}>
               <InputField label="Latitude" value={formData.latitude} onChange={(val) => handleInputChange('latitude', val)} type="number" placeholder="31.479626" />
               <InputField label="Longitude" value={formData.longitude} onChange={(val) => handleInputChange('longitude', val)} type="number" placeholder="74.303743" />
               <div className="md:col-span-2">
                 <InputField label="Other Feedback" value={formData.otherFeedback} onChange={(val) => handleInputChange('otherFeedback', val)} placeholder="Enter any additional feedback" isTextArea />
               </div>
-            </FormSection>
+            </SectionWrapper>
           </div>
         </div>
 

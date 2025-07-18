@@ -1,6 +1,7 @@
 import React from 'react';
-import { User, MapPin, CreditCard, Settings, Shield } from 'lucide-react';
-import FormSection from './FormSection';
+import { User, MapPin, CreditCard, Settings } from 'lucide-react';
+import HeaderSection from '../common/HeaderSection';
+import SectionWrapper from '../common/SectionWrapper';
 
 const VendorInfoDisplay = () => {
   const vendorData = {
@@ -54,20 +55,7 @@ const VendorInfoDisplay = () => {
 
   return (
     <div className="w-full">
-      {/* Ultra Compact Header */}
-      <div className="bg-gradient-to-t from-green-500 via-green-600 to-teal-600 rounded-t p-3 text-white shadow-md">
-        <div className="flex items-center justify-between">
-          {/* Logo - removed as per request */}
-          
-          {/* Title */}
-          <div className="flex-1 text-center">
-            <h1 className="text-sm font-bold">Vendor Information</h1>
-            <p className="text-green-100 text-xs">Read-only display for verification purposes</p>
-          </div>
-          
-          {/* Security Badge - removed as per request */}
-        </div>
-      </div>
+      <HeaderSection title="Vendor Information" subtitle="Read-only display for verification purposes" />
       
       {/* Ultra Compact Form Content */}
       <div className="bg-gradient-to-br from-slate-50 to-gray-50 border-x border-b border-slate-200 rounded-b shadow-md">
@@ -75,43 +63,39 @@ const VendorInfoDisplay = () => {
           
           {/* Left Column */}
           <div className="border-r border-slate-200">
-            {/* Personal Information */}
-            <FormSection title="Personal Information" icon={User}>
+            <SectionWrapper title="Personal Information" icon={User}>
               <DisplayField label="Full Name" value={vendorData.fullName} />
               <DisplayField label="CNIC" value={vendorData.cnic} />
               <DisplayField label="Mobile" value={vendorData.mobile} />
               <StatusBadge active={vendorData.active} />
-            </FormSection>
+            </SectionWrapper>
 
-            {/* Account Information */}
-            <FormSection title="Account Information" icon={CreditCard}>
+            <SectionWrapper title="Account Information" icon={CreditCard}>
               <DisplayField label="PCRM Number" value={vendorData.pcrmNumber} />
               <DisplayField label="Sales Point Name" value={vendorData.salesPointName} />
               <DisplayField label="Bank Account Number" value={vendorData.bankAccountNumber} />
               <DisplayField label="Third Party EPI" value={vendorData.thirdPartyEpi} />
-            </FormSection>
+            </SectionWrapper>
           </div>
           
           {/* Right Column */}
           <div>
-            {/* Location Details */}
-            <FormSection title="Location Details" icon={MapPin}>
+            <SectionWrapper title="Location Details" icon={MapPin}>
               <DisplayField label="Admin Region" value={vendorData.adminRegion} />
               <DisplayField label="Retailer Address" value={vendorData.retailerAddress} />
               <DisplayField label="Territories" value={vendorData.territories} />
               <DisplayField label="Latitude" value={vendorData.latitude} />
               <DisplayField label="Longitude" value={vendorData.longitude} />
               <DisplayField label="Company Name" value={vendorData.companyName} />
-            </FormSection>
+            </SectionWrapper>
 
-            {/* Technical Details */}
-            <FormSection title="Technical Details" icon={Settings}>
+            <SectionWrapper title="Technical Details" icon={Settings}>
               <DisplayField label="Region" value={vendorData.region} />
               <DisplayField label="Exchange" value={vendorData.exchange} />
               <DisplayField label="Designation" value={vendorData.designation} />
               <DisplayField label="Ufone Wallet" value={vendorData.ufoneWallet} />
               <DisplayField label="OSID" value={vendorData.osid} />
-            </FormSection>
+            </SectionWrapper>
           </div>
         </div>
       </div>

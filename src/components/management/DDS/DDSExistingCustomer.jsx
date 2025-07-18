@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
-import { User, MapPin, CreditCard, Settings, Shield, CheckCircle, AlertCircle } from 'lucide-react';
-import FormSection from '../../vendorinformation/FormSection';
+import { User, MapPin, CreditCard } from 'lucide-react';
+import HeaderSection from '../../common/HeaderSection';
+import SectionWrapper from '../../common/SectionWrapper';
+import FormField from '../../common/FormField';
+import RadioGroup from '../../common/RadioGroup';
+import FormActions from '../../common/FormActions';
 
 const DDSExistingCustomer = () => {
   const [formData, setFormData] = useState({
@@ -73,124 +77,49 @@ const DDSExistingCustomer = () => {
     }, 1200);
   };
 
-  const InputField = ({ label, value, onChange, type = 'text', required = false, options = null, error = '', className = '', placeholder = '' }) => (
-    <div className={`group ${className}`}>
-      <div className="mb-1">
-        <label className="block text-xs font-medium text-gray-700 mb-1">
-          {label} {required && <span className="text-red-500">*</span>}
-        </label>
-        <div className={`relative ${error ? 'border-red-300' : 'border-gray-300'} focus-within:border-green-500 transition-all duration-200`}>
-          {options ? (
-            <select
-              value={value}
-              onChange={e => onChange(e.target.value)}
-              className="w-full px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 hover:border-gray-400 transition-all duration-200"
-            >
-              <option value="">--Please Select--</option>
-              {options.map((option, idx) => (
-                <option key={idx} value={option}>{option}</option>
-              ))}
-            </select>
-          ) : (
-            <input
-              type={type}
-              value={value}
-              onChange={e => onChange(e.target.value)}
-              className="w-full px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 hover:border-gray-400 transition-all duration-200"
-              placeholder={placeholder}
-            />
-          )}
-        </div>
-        {error && (
-          <div className="flex items-center mt-1 text-red-600">
-            <AlertCircle className="w-3 h-3 mr-1" />
-            <span className="text-xs">{error}</span>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-
-  const RadioGroup = ({ label, value, onChange, required = false, error = '', options = ['YES', 'NO', 'Other'] }) => (
-    <div className="mb-1">
-      <label className="block text-xs font-medium text-gray-700 mb-1">
-        {label} {required && <span className="text-red-500">*</span>}
-      </label>
-      <div className="flex items-center space-x-4">
-        {options.map(opt => (
-          <label key={opt} className="flex items-center text-xs font-medium text-gray-700">
-            <input
-              type="radio"
-              name={label}
-              value={opt}
-              checked={value === opt}
-              onChange={() => onChange(opt)}
-              className="mr-1 accent-green-500"
-            />
-            {opt}
-          </label>
-        ))}
-      </div>
-      {error && (
-        <div className="flex items-center mt-1 text-red-600">
-          <AlertCircle className="w-3 h-3 mr-1" />
-          <span className="text-xs">{error}</span>
-        </div>
-      )}
-    </div>
-  );
+  // ---- replaced local InputField & RadioGroup with common components ----
 
   return (
     <div className="w-full">
-      {/* Header */}
-      <div className="bg-gradient-to-t from-green-500 via-green-600 to-teal-600 rounded-t p-3 text-white shadow-md">
-        <div className="flex items-center justify-between">
-          
-          <div className="flex-1 text-center">
-            <h1 className="text-sm font-bold">DDS Existing Customer</h1>
-            <p className="text-green-100 text-xs">DDS existing customer order form</p>
-          </div>
-          
-          
-        </div>
-      </div>
+      <HeaderSection title="DDS Existing Customer" subtitle="DDS existing customer order form" />
+
       <form onSubmit={handleSubmit}>
         <div className="bg-gray-50 border-x-2 border-b-2 border-gray-200 rounded-b-lg shadow-lg">
           {/* Top Row */}
           <div className="bg-white border-b border-gray-200 p-3">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-              <InputField label="Date" type="date" value={formData.date} onChange={v => handleInputChange('date', v)} required error={errors.date} />
-              <InputField label="RD ID" value={formData.rdId} onChange={v => handleInputChange('rdId', v)} required error={errors.rdId} />
-              <InputField label="RD Name" value={formData.rdName} onChange={v => handleInputChange('rdName', v)} required error={errors.rdName} />
-              <InputField label="Sales Officer" value={formData.salesOfficer} onChange={v => handleInputChange('salesOfficer', v)} required error={errors.salesOfficer} />
+              <FormField label="Date" type="date" value={formData.date} onChange={v => handleInputChange('date', v)} required error={errors.date} />
+              <FormField label="RD ID" value={formData.rdId} onChange={v => handleInputChange('rdId', v)} required error={errors.rdId} />
+              <FormField label="RD Name" value={formData.rdName} onChange={v => handleInputChange('rdName', v)} required error={errors.rdName} />
+              <FormField label="Sales Officer" value={formData.salesOfficer} onChange={v => handleInputChange('salesOfficer', v)} required error={errors.salesOfficer} />
             </div>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
             {/* Left Column */}
             <div className="border-r border-gray-200">
-              <FormSection title="Customer Details" icon={User}>
-                <InputField label="Exchange" value={formData.exchange} onChange={v => handleInputChange('exchange', v)} required error={errors.exchange} placeholder="Enter exchange name/code" />
-                <InputField label="DC/MSAG IDs" value={formData.dcMsagIds} onChange={v => handleInputChange('dcMsagIds', v)} required error={errors.dcMsagIds} placeholder="Enter DC/MSAG IDs" />
-                <InputField label="DP ID" value={formData.dpId} onChange={v => handleInputChange('dpId', v)} required error={errors.dpId} placeholder="Enter DP ID" />
-                <InputField label="PSTN No" value={formData.pstnNo} onChange={v => handleInputChange('pstnNo', v)} required error={errors.pstnNo} placeholder="Enter PSTN number" />
-                <InputField label="Name" value={formData.name} onChange={v => handleInputChange('name', v)} required error={errors.name} placeholder="Enter your name" />
-                <InputField label="CNIC" value={formData.cnic} onChange={v => handleInputChange('cnic', v)} required error={errors.cnic} placeholder="Enter CNIC number" />
-                <InputField label="Address" value={formData.address} onChange={v => handleInputChange('address', v)} required error={errors.address} placeholder="Enter your address" />
-                <InputField label="Contact No" value={formData.contactNo} onChange={v => handleInputChange('contactNo', v)} required error={errors.contactNo} placeholder="03XX-XXXXXXX" />
-              </FormSection>
-            
+              <SectionWrapper title="Customer Details" icon={User}>
+                <FormField label="Exchange" value={formData.exchange} onChange={v => handleInputChange('exchange', v)} required error={errors.exchange} placeholder="Enter exchange name/code" />
+                <FormField label="DC/MSAG IDs" value={formData.dcMsagIds} onChange={v => handleInputChange('dcMsagIds', v)} required error={errors.dcMsagIds} placeholder="Enter DC/MSAG IDs" />
+                <FormField label="DP ID" value={formData.dpId} onChange={v => handleInputChange('dpId', v)} required error={errors.dpId} placeholder="Enter DP ID" />
+                <FormField label="PSTN No" value={formData.pstnNo} onChange={v => handleInputChange('pstnNo', v)} required error={errors.pstnNo} placeholder="Enter PSTN number" />
+                <FormField label="Name" value={formData.name} onChange={v => handleInputChange('name', v)} required error={errors.name} placeholder="Enter your name" />
+                <FormField label="CNIC" value={formData.cnic} onChange={v => handleInputChange('cnic', v)} required error={errors.cnic} placeholder="Enter CNIC number" />
+                <FormField label="Address" value={formData.address} onChange={v => handleInputChange('address', v)} required error={errors.address} placeholder="Enter your address" />
+                <FormField label="Contact No" value={formData.contactNo} onChange={v => handleInputChange('contactNo', v)} required error={errors.contactNo} placeholder="03XX-XXXXXXX" />
+              </SectionWrapper>
             </div>
             {/* Right Column */}
             <div>
-              <FormSection title="Location & Contact" icon={MapPin}>
-                <InputField label="Latitude" value={formData.latitude} onChange={v => handleInputChange('latitude', v)} type="number" required error={errors.latitude} />
-                <InputField label="Longitude" value={formData.longitude} onChange={v => handleInputChange('longitude', v)} type="number" required error={errors.longitude} />
-                <InputField label="Email ID" value={formData.email} onChange={v => handleInputChange('email', v)} type="email" required error={errors.email} placeholder="example@email.com" />
-                <InputField label="Sale Source" value={formData.saleSource} onChange={v => handleInputChange('saleSource', v)} options={["DDS", "Other"]} required error={errors.saleSource} placeholder="Select sale source" />
-                <InputField label="Others" value={formData.others} onChange={v => handleInputChange('others', v)} type="text" required error={errors.others} placeholder="Enter additional details" />
-                <InputField label="Region Name" value={formData.region} onChange={v => handleInputChange('region', v)} options={["North", "South", "East", "West", "Central"]} required error={errors.region} placeholder="Select region" />
-                </FormSection>
-                <FormSection title="Order Reason" icon={CreditCard}>
+              <SectionWrapper title="Location & Contact" icon={MapPin}>
+                <FormField label="Latitude" value={formData.latitude} onChange={v => handleInputChange('latitude', v)} type="number" required error={errors.latitude} />
+                <FormField label="Longitude" value={formData.longitude} onChange={v => handleInputChange('longitude', v)} type="number" required error={errors.longitude} />
+                <FormField label="Email ID" value={formData.email} onChange={v => handleInputChange('email', v)} type="email" required error={errors.email} placeholder="example@email.com" />
+                <FormField label="Sale Source" value={formData.saleSource} onChange={v => handleInputChange('saleSource', v)} options={["DDS", "Other"]} required error={errors.saleSource} placeholder="Select sale source" />
+                <FormField label="Others" value={formData.others} onChange={v => handleInputChange('others', v)} type="text" required error={errors.others} placeholder="Enter additional details" />
+                <FormField label="Region Name" value={formData.region} onChange={v => handleInputChange('region', v)} options={["North", "South", "East", "West", "Central"]} required error={errors.region} placeholder="Select region" />
+              </SectionWrapper>
+
+              <SectionWrapper title="Order Reason" icon={CreditCard}>
                 <RadioGroup label="Customer Satisfaction" value={formData.customerSatisfaction} onChange={v => handleInputChange('customerSatisfaction', v)} />
                 <RadioGroup label="Bill Not Received" value={formData.billNotReceived} onChange={v => handleInputChange('billNotReceived', v)} />
                 <RadioGroup label="Expensive" value={formData.expensive} onChange={v => handleInputChange('expensive', v)} />
@@ -199,32 +128,11 @@ const DDSExistingCustomer = () => {
                 <RadioGroup label="No Browsing" value={formData.noBrowsing} onChange={v => handleInputChange('noBrowsing', v)} />
                 <RadioGroup label="ODN" value={formData.odn} onChange={v => handleInputChange('odn', v)} options={["YES", "NO"]} />
                 <RadioGroup label="FDH" value={formData.fdh} onChange={v => handleInputChange('fdh', v)} options={["YES", "NO"]} />
-              </FormSection>
+              </SectionWrapper>
             </div>
           </div>
-          
-          {/* Submit Button */}
-          <div className="p-3 border-t border-gray-200 bg-gradient-to-r from-gray-50 to-white">
-            <div className="flex justify-center">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="bg-gradient-to-r from-green-500 to-green-600 text-white px-8 py-2 rounded-lg text-xs font-semibold hover:from-green-600 hover:to-green-700 hover:shadow-lg transition-all duration-300 transform hover:scale-105 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? (
-                  <div className="flex items-center">
-                    <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white mr-2"></div>
-                    Submitting...
-                  </div>
-                ) : (
-                  <div className="flex items-center">
-                    <CheckCircle className="w-3 h-3 mr-2" />
-                    Submit
-                  </div>
-                )}
-              </button>
-            </div>
-          </div>
+
+          <FormActions primaryLabel="Submit" primaryDisabled={isSubmitting} isSubmitting={isSubmitting} onPrimary={handleSubmit} />
         </div>
       </form>
     </div>

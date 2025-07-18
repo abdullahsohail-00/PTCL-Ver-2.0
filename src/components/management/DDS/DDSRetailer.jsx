@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { User, MapPin, CreditCard, Settings, Shield, CheckCircle, AlertCircle } from 'lucide-react';
-import FormSection from '../../vendorinformation/FormSection';
+import SectionWrapper from '../../common/SectionWrapper';
 
 const DDSRetailer = () => {
   const [formData, setFormData] = useState({

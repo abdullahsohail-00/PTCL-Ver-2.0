@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { User, Search, Download, Filter, Shield, Lock, Edit, MapPin, Building, Wallet, Hash } from 'lucide-react';
+import { User, Search, Download, Lock, Edit, Hash } from 'lucide-react';
+import HeaderSection from '../common/HeaderSection';
+import FormField from '../common/FormField';
 
 const TPNRDIDsPage = () => {
   const [filters, setFilters] = useState({
@@ -44,11 +46,6 @@ const TPNRDIDsPage = () => {
   const handleSearch = () => {
     setShowResults(true);
     console.log('Searching with filters:', filters);
-  };
-
-  const handleExportToExcel = () => {
-    console.log('Exporting to Excel...');
-    alert('Exporting data to Excel...');
   };
 
   // Sample data based on the screenshots
@@ -189,7 +186,10 @@ const TPNRDIDsPage = () => {
           TPN/RD IDs Records
         </h3>
         <button
-          onClick={handleExportToExcel}
+          onClick={() => {
+            console.log('Exporting to Excel...');
+            alert('Exporting data to Excel...');
+          }}
           className="bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1 rounded text-xs font-medium flex items-center"
         >
           <Download className="w-3 h-3 mr-1" />
@@ -282,15 +282,8 @@ const TPNRDIDsPage = () => {
   return (
     <div className="h-full w-full flex flex-col bg-gray-50">
       {/* Header */}
-      <div className="bg-gradient-to-t from-green-500 via-green-600 to-teal-600 rounded-t p-3 text-white shadow-md mx-4 mt-4">
-        <div className="flex items-center justify-between">
-          
-          <div className="flex-1 text-center px-2">
-            <h1 className="text-sm font-bold">TPN/RD IDs</h1>
-            <p className="text-green-100 text-xs hidden sm:block">Manage and track all TPN/RD ID records</p>
-          </div>
-          
-        </div>
+      <div className="mx-4 mt-4">
+        <HeaderSection title="TPN/RD IDs" subtitle="Manage and track all TPN/RD ID records" />
       </div>
 
       {/* Main Content */}
@@ -299,52 +292,36 @@ const TPNRDIDsPage = () => {
         <div className="p-4 border-b border-gray-200 bg-gray-50">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {/* Username */}
-            <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">Username:</label>
-              <input
-                type="text"
-                value={filters.username}
-                onChange={(e) => handleFilterChange('username', e.target.value)}
-                placeholder="Enter username"
-                className="w-full px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500"
-              />
-            </div>
+            <FormField
+              label="Username:"
+              value={filters.username}
+              onChange={(value) => handleFilterChange('username', value)}
+              placeholder="Enter username"
+            />
 
             {/* CNIC */}
-            <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">CNIC:</label>
-              <input
-                type="text"
-                value={filters.cnic}
-                onChange={(e) => handleFilterChange('cnic', e.target.value)}
-                placeholder="Enter CNIC"
-                className="w-full px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500"
-              />
-            </div>
+            <FormField
+              label="CNIC:"
+              value={filters.cnic}
+              onChange={(value) => handleFilterChange('cnic', value)}
+              placeholder="Enter CNIC"
+            />
 
             {/* Cell Number */}
-            <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">Cell Number:</label>
-              <input
-                type="text"
-                value={filters.cellNumber}
-                onChange={(e) => handleFilterChange('cellNumber', e.target.value)}
-                placeholder="Enter cell number"
-                className="w-full px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500"
-              />
-            </div>
+            <FormField
+              label="Cell Number:"
+              value={filters.cellNumber}
+              onChange={(value) => handleFilterChange('cellNumber', value)}
+              placeholder="Enter cell number"
+            />
 
             {/* Territory ID */}
-            <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">Territory ID:</label>
-              <input
-                type="text"
-                value={filters.territoryId}
-                onChange={(e) => handleFilterChange('territoryId', e.target.value)}
-                placeholder="Enter territory ID"
-                className="w-full px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500"
-              />
-            </div>
+            <FormField
+              label="Territory ID:"
+              value={filters.territoryId}
+              onChange={(value) => handleFilterChange('territoryId', value)}
+              placeholder="Enter territory ID"
+            />
 
             {/* Search Button */}
             <div className="flex items-end">

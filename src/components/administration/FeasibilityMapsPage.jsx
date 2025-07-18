@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import {
-  MapPin, Shield, Building, Search, Layers, Globe, Map
+  MapPin, Search, Layers, Globe, Map
 } from 'lucide-react';
+import HeaderSection from '../common/HeaderSection';
+import SearchBar from '../common/SearchBar';
+import CheckboxCluster from '../common/CheckboxCluster';
+import ToggleButtonPair from '../common/ToggleButtonPair';
 
 const FeasibilityMapsPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -33,106 +37,37 @@ const FeasibilityMapsPage = () => {
 
   return (
     <div className="w-full h-screen flex flex-col">
-      {/* Header */}
-      <div className="bg-gradient-to-t from-green-500 via-green-600 to-teal-600 rounded-t p-3 text-white shadow-md">
-        <div className="flex items-center justify-between">
-          {/* Logo - removed as per request */}
-          
-          <div className="flex-1 text-center">
-            <h1 className="text-sm font-bold">Feasibility Maps</h1>
-            <p className="text-green-100 text-xs">Service coverage and availability</p>
-          </div>
-          
-          {/* Security Badge - removed as per request */}
-        </div>
-      </div>
+      <HeaderSection title="Feasibility Maps" subtitle="Service coverage and availability" />
 
       {/* Controls Panel */}
       <div className="bg-white border-b border-gray-200 p-3 shadow-sm">
         <div className="flex items-center justify-between flex-wrap gap-3">
-          {/* Service Type Checkboxes */}
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                id="gpon"
-                checked={selectedServices.gpon}
-                onChange={() => handleServiceToggle('gpon')}
-                className="w-3 h-3 text-green-600 border-gray-300 rounded focus:ring-green-500 focus:ring-1"
-              />
-              <label htmlFor="gpon" className="ml-1 text-xs font-medium text-green-600">
-                GPON
-              </label>
-            </div>
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                id="vdsl"
-                checked={selectedServices.vdsl}
-                onChange={() => handleServiceToggle('vdsl')}
-                className="w-3 h-3 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:ring-1"
-              />
-              <label htmlFor="vdsl" className="ml-1 text-xs font-medium text-blue-600">
-                VDSL
-              </label>
-            </div>
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                id="adsl"
-                checked={selectedServices.adsl}
-                onChange={() => handleServiceToggle('adsl')}
-                className="w-3 h-3 text-purple-600 border-gray-300 rounded focus:ring-purple-500 focus:ring-1"
-              />
-              <label htmlFor="adsl" className="ml-1 text-xs font-medium text-purple-600">
-                ADSL
-              </label>
-            </div>
-          </div>
+          <CheckboxCluster
+            options={[
+              { value: 'gpon', label: 'GPON', colorClass: 'text-green-600' },
+              { value: 'vdsl', label: 'VDSL', colorClass: 'text-blue-600' },
+              { value: 'adsl', label: 'ADSL', colorClass: 'text-purple-600' }
+            ]}
+            selected={selectedServices}
+            onToggle={(val)=>handleServiceToggle(val)}
+          />
 
-          {/* Search Bar */}
-          <div className="flex items-center space-x-2">
-            <div className="relative">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Search for a place..."
-                className="w-64 px-3 py-1 text-xs font-medium text-gray-900 bg-white border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 hover:border-gray-400 transition-all duration-200"
-              />
-              <Search 
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 w-3 h-3 text-gray-400 cursor-pointer hover:text-green-500"
-                onClick={handleSearch}
-              />
-            </div>
-          </div>
+          <SearchBar
+            value={searchQuery}
+            onChange={setSearchQuery}
+            onSearch={handleSearch}
+            placeholder="Search for a place..."
+            className="w-64"
+          />
 
-          {/* Map View Toggle */}
-          <div className="flex items-center space-x-1 bg-gray-100 rounded">
-            <button
-              onClick={() => setMapView('map')}
-              className={`px-3 py-1 text-xs font-medium rounded transition-all duration-200 ${
-                mapView === 'map' 
-                  ? 'bg-green-500 text-white shadow-sm' 
-                  : 'text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              <Map className="w-3 h-3 inline mr-1" />
-              Map
-            </button>
-            <button
-              onClick={() => setMapView('satellite')}
-              className={`px-3 py-1 text-xs font-medium rounded transition-all duration-200 ${
-                mapView === 'satellite' 
-                  ? 'bg-green-500 text-white shadow-sm' 
-                  : 'text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              <Globe className="w-3 h-3 inline mr-1" />
-              Satellite
-            </button>
-          </div>
+          <ToggleButtonPair
+            value={mapView}
+            onChange={setMapView}
+            options={[
+              { value: 'map', label: 'Map', icon: Map },
+              { value: 'satellite', label: 'Satellite', icon: Globe }
+            ]}
+          />
         </div>
       </div>
 

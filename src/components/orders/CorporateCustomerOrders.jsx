@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Shield, List, CheckCircle, AlertCircle, Search, Filter, Download, RefreshCw } from 'lucide-react';
+import { Filter, Download, RefreshCw } from 'lucide-react';
+import HeaderSection from '../common/HeaderSection';
+import SearchBar from '../common/SearchBar';
+import ResultsTable from '../common/ResultsTable';
 
 const CorporateCustomerOrders = () => {
   const [orders, setOrders] = useState([
@@ -41,36 +44,19 @@ const CorporateCustomerOrders = () => {
 
   return (
     <div className="max-w-7xl mx-auto p-4">
-      {/* Header */}
-      <div className="bg-gradient-to-t from-green-500 via-green-600 to-teal-600 rounded-t p-3 text-white shadow-md">
-        <div className="flex items-center justify-between">
-          
-          <div className="flex-1 text-center">
-            <h1 className="text-sm font-bold">Corporate Customer Orders</h1>
-            <p className="text-green-100 text-xs">View and manage corporate orders</p>
-          </div>
-          
-          
-        </div>
-      </div>
+      <HeaderSection title="Corporate Customer Orders" subtitle="View and manage corporate orders" />
       
       {/* Content */}
       <div className="bg-white border-x-2 border-b-2 border-gray-200 rounded-b-lg shadow-lg">
         {/* Filters and Search */}
         <div className="p-4 border-b border-gray-200">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search className="h-3 w-3 text-gray-400" />
-              </div>
-              <input
-                type="text"
-                placeholder="Search orders..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="block w-full pl-9 pr-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 hover:border-gray-400 transition-all duration-200"
-              />
-            </div>
+            <SearchBar
+              value={searchTerm}
+              onChange={setSearchTerm}
+              onSearch={()=>{}}
+              placeholder="Search orders..."
+            />
             
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -108,104 +94,32 @@ const CorporateCustomerOrders = () => {
           </div>
         </div>
         
-        {/* Orders Table */}
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th scope="col" className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Name
-                </th>
-                <th scope="col" className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Mobile No
-                </th>
-                <th scope="col" className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Email
-                </th>
-                <th scope="col" className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Address
-                </th>
-                <th scope="col" className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  City
-                </th>
-                <th scope="col" className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Exchange
-                </th>
-                <th scope="col" className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Region
-                </th>
-                <th scope="col" className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Zone
-                </th>
-                <th scope="col" className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th scope="col" className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  NTN No
-                </th>
-                <th scope="col" className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {filteredOrders.map((order, index) => (
-                <tr key={index} className="hover:bg-gray-50">
-                  <td className="px-4 py-3 whitespace-nowrap text-xs font-medium text-gray-900">
-                    {order.name}
-                  </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-xs text-gray-500">
-                    {order.mobile}
-                  </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-xs text-gray-500">
-                    {order.email}
-                  </td>
-                  <td className="px-4 py-3 text-xs text-gray-500">
-                    <div className="max-w-xs truncate">{order.address}</div>
-                  </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-xs text-gray-500">
-                    {order.city}
-                  </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-xs text-gray-500">
-                    {order.exchange}
-                  </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-xs text-gray-500">
-                    {order.region}
-                  </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-xs text-gray-500">
-                    {order.zone}
-                  </td>
-                  <td className="px-4 py-3 whitespace-nowrap">
-                    <span className={`px-2 py-1 text-xs font-medium rounded-full 
-                      ${order.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' : 
-                        order.status === 'Completed' ? 'bg-green-100 text-green-800' : 
-                        'bg-red-100 text-red-800'}`}>
-                      {order.status}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-xs text-gray-500">
-                    {order.ntn}
-                  </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-xs font-medium">
-                    <button className="text-green-600 hover:text-green-900">
-                      View
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          
-          {filteredOrders.length === 0 && (
-            <div className="bg-white p-8 text-center">
-              <div className="flex flex-col items-center justify-center">
-                <Search className="w-8 h-8 text-gray-400 mb-2" />
-                <h3 className="text-sm font-medium text-gray-900">No orders found</h3>
-                <p className="text-xs text-gray-500 mt-1">Try adjusting your search or filter to find what you're looking for.</p>
-              </div>
-            </div>
+        <ResultsTable
+          columns={[
+            { key: 'name', label: 'Name' },
+            { key: 'mobile', label: 'Mobile No' },
+            { key: 'email', label: 'Email' },
+            { key: 'address', label: 'Address' },
+            { key: 'city', label: 'City' },
+            { key: 'exchange', label: 'Exchange' },
+            { key: 'region', label: 'Region' },
+            { key: 'zone', label: 'Zone' },
+            { key: 'statusBadge', label: 'Status' },
+            { key: 'ntn', label: 'NTN No' }
+          ]}
+          rows={filteredOrders.map((o)=>({
+            ...o,
+            statusBadge: (
+              <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                o.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' : o.status === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+              }`}>{o.status}</span>
+            )
+          }))}
+          renderActions={() => (
+            <button className="text-green-600 hover:text-green-900 text-xs font-medium">View</button>
           )}
-        </div>
+          pagination={{ currentPage:1, totalPages:1 }}
+        />
         
         {/* Pagination */}
         <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200">

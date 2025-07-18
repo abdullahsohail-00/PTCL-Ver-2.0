@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { User, Search, Download, Shield, Edit, Plus } from 'lucide-react';
+import { User, Search, Download, Edit, Plus } from 'lucide-react';
+import HeaderSection from '../common/HeaderSection';
+import SearchBar from '../common/SearchBar';
+import ResultsTable from '../common/ResultsTable';
+import ModalDialog from '../common/ModalDialog';
 
 const InsertVendorCodePage = () => {
   const [searchCriteria, setSearchCriteria] = useState({
@@ -91,68 +95,17 @@ const InsertVendorCodePage = () => {
     { id: 1613, vendorCode: '6211179', vendorName: 'RDU_F_MATENTELECOM', salesPointName: '-' }
   ];
 
-  const ResultsTable = () => (
-    <div className="w-full bg-white rounded-lg border border-gray-200 mb-6">
-      <div className="w-full overflow-x-auto custom-table-scroll" style={{ maxHeight: '600px' }}>
-        <table className="w-full">
-          <thead className="bg-green-500 text-white sticky top-0 z-10">
-            <tr>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase">Edit</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase">Vendor ID</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase">Vendor Code</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase">Vendor Name</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase">Sales Point Name</th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {vendorData.map((vendor, index) => (
-              <tr key={vendor.id} className={`hover:bg-gray-50 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
-                <td className="px-4 py-3">
-                  <button
-                    onClick={() => handleEdit(vendor)}
-                    className="bg-orange-100 hover:bg-orange-200 text-orange-700 p-1.5 rounded transition-colors"
-                  >
-                    <Edit className="w-3 h-3" />
-                  </button>
-                </td>
-                <td className="px-4 py-3 text-xs font-medium text-gray-900">{vendor.id}</td>
-                <td className="px-4 py-3 text-xs text-gray-600">{vendor.vendorCode}</td>
-                <td className="px-4 py-3 text-xs text-gray-600">{vendor.vendorName}</td>
-                <td className="px-4 py-3 text-xs text-gray-600">{vendor.salesPointName}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      
-      {/* Pagination */}
-      <div className="bg-gray-50 px-4 py-3 border-t border-gray-200 flex items-center justify-center">
-        <div className="flex space-x-1">
-          <button className="px-3 py-1 text-xs bg-green-500 text-white rounded">1</button>
-          <button className="px-3 py-1 text-xs text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded">2</button>
-          <button className="px-3 py-1 text-xs text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded">3</button>
-          <button className="px-3 py-1 text-xs text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded">4</button>
-          <button className="px-3 py-1 text-xs text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded">5</button>
-          <span className="px-3 py-1 text-xs text-gray-500">...</span>
-          <button className="px-3 py-1 text-xs text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded">10</button>
-        </div>
-      </div>
-    </div>
-  );
+  // After vendorData definition, add columns array
+  const columns = [
+    { key: 'id', label: 'Vendor ID' },
+    { key: 'vendorCode', label: 'Vendor Code' },
+    { key: 'vendorName', label: 'Vendor Name' },
+    { key: 'salesPointName', label: 'Sales Point Name' }
+  ];
 
   return (
     <div className="h-full w-full flex flex-col bg-gray-50">
-      {/* Header */}
-      <div className="bg-gradient-to-t from-green-500 via-green-600 to-teal-600 rounded-t p-3 text-white shadow-md mx-4 mt-4">
-        <div className="flex items-center justify-between">
-          
-          <div className="flex-1 text-center px-2">
-            <h1 className="text-sm font-bold">Insert Vendor Code</h1>
-            <p className="text-green-100 text-xs hidden sm:block">Manage and insert vendor codes</p>
-          </div>
-          
-        </div>
-      </div>
+      <HeaderSection title="Insert Vendor Code" subtitle="Manage and insert vendor codes" />
 
       {/* Main Content */}
       <div className="bg-white mx-4 mb-4 rounded-b-lg shadow-lg flex-1 overflow-hidden">
@@ -176,15 +129,13 @@ const InsertVendorCodePage = () => {
             </div>
 
             {/* Search Field */}
-            <div className="w-full max-w-md">
-              <input
-                type="text"
-                value={searchCriteria.vendorName}
-                onChange={(e) => handleSearchChange('vendorName', e.target.value)}
-                placeholder="Search vendor..."
-                className="w-full px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500"
-              />
-            </div>
+            <SearchBar
+              value={searchCriteria.vendorName}
+              onChange={(v) => handleSearchChange('vendorName', v)}
+              onSearch={handleSearch}
+              placeholder="Search vendor..."
+              className="w-full max-w-md"
+            />
 
             {/* Buttons */}
             <div className="flex gap-2">
@@ -226,66 +177,61 @@ const InsertVendorCodePage = () => {
           </div>
         ) : (
           <div className="p-4 overflow-auto">
-            <ResultsTable />
+            <ResultsTable
+              columns={columns}
+              rows={vendorData}
+              renderActions={(row) => (
+                <button
+                  onClick={() => handleEdit(row)}
+                  className="bg-orange-100 hover:bg-orange-200 text-orange-700 p-1.5 rounded transition-colors"
+                >
+                  <Edit className="w-3 h-3" />
+                </button>
+              )}
+              pagination={{ currentPage: 1, totalPages: 10, onPageChange: (p)=>console.log('page', p) }}
+            />
           </div>
         )}
       </div>
 
       {/* Insert Data Dialog */}
       {showInsertDialog && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-xl p-6 w-96">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-              <div className="p-2 bg-green-100 rounded-md mr-2">
-                <Plus className="w-5 h-5 text-green-600" />
-              </div>
-              Insert Data
-            </h3>
-            
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Vendor Name<span className="text-red-500 ml-1">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={newVendor.vendorName}
-                  onChange={(e) => setNewVendor(prev => ({ ...prev, vendorName: e.target.value }))}
-                  className="w-full px-3 py-2 text-sm text-gray-900 bg-white border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500"
-                  placeholder="Enter vendor name"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Vendor Code<span className="text-red-500 ml-1">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={newVendor.vendorCode}
-                  onChange={(e) => setNewVendor(prev => ({ ...prev, vendorCode: e.target.value }))}
-                  className="w-full px-3 py-2 text-sm text-gray-900 bg-white border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500"
-                  placeholder="Enter vendor code"
-                />
-              </div>
+        <ModalDialog
+          isOpen={showInsertDialog}
+          onClose={() => setShowInsertDialog(false)}
+          title="Insert Data"
+          icon={Plus}
+          primaryLabel="Insert"
+          onPrimary={handleSaveNewVendor}
+        >
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Vendor Name<span className="text-red-500 ml-1">*</span>
+              </label>
+              <input
+                type="text"
+                value={newVendor.vendorName}
+                onChange={(e) => setNewVendor(prev => ({ ...prev, vendorName: e.target.value }))}
+                className="w-full px-3 py-2 text-sm text-gray-900 bg-white border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500"
+                placeholder="Enter vendor name"
+              />
             </div>
-
-            <div className="flex justify-end gap-2 mt-6">
-              <button
-                onClick={() => setShowInsertDialog(false)}
-                className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleSaveNewVendor}
-                className="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded text-sm font-semibold hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-md"
-              >
-                Insert
-              </button>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Vendor Code<span className="text-red-500 ml-1">*</span>
+              </label>
+              <input
+                type="text"
+                value={newVendor.vendorCode}
+                onChange={(e) => setNewVendor(prev => ({ ...prev, vendorCode: e.target.value }))}
+                className="w-full px-3 py-2 text-sm text-gray-900 bg-white border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500"
+                placeholder="Enter vendor code"
+              />
             </div>
           </div>
-        </div>
+        </ModalDialog>
       )}
     </div>
   );

@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Shield, Search, Filter, Download } from 'lucide-react';
+import { Download } from 'lucide-react';
+import HeaderSection from '../../common/HeaderSection';
+import FormField from '../../common/FormField';
+import FormActions from '../../common/FormActions';
 
 const DDSNewCustomerDetail = () => {
   const [filters, setFilters] = useState({
@@ -25,53 +28,30 @@ const DDSNewCustomerDetail = () => {
 
   return (
     <div className="h-full w-full flex flex-col bg-gray-50">
-      {/* Header - Consistent with OrderDetailsPage */}
-      <div className="bg-gradient-to-t from-green-500 via-green-600 to-teal-600 rounded-t p-3 text-white shadow-md">
-        <div className="flex items-center justify-between">
-          {/* Logo - removed as per request */}
-          
-          <div className="flex-1 text-center px-2">
-            <h1 className="text-sm font-bold">DDS New Customer Details</h1>
-            <p className="text-green-100 text-xs hidden sm:block">Filter and export DDS new customer details</p>
-          </div>
-          
-          {/* Security Badge - removed as per request */}
-        </div>
-      </div>
-
-      {/* Main Content - Card with Date Filters and Export Button */}
+      <HeaderSection title="DDS New Customer Details" subtitle="Filter and export DDS new customer details" />
       <div className="bg-white mx-4 mb-4 rounded-b-lg shadow-lg flex-1 overflow-hidden flex items-center justify-center">
         <form onSubmit={handleExportToExcel} className="w-full max-w-md p-8 flex flex-col items-center border border-green-200 rounded-lg shadow-lg bg-white mt-8 mb-8">
           <div className="w-full grid grid-cols-1 gap-6 mb-6">
-            <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">From Date<span className="text-red-500">*</span></label>
-              <input
-                type="date"
-                value={filters.fromDate}
-                onChange={e => handleFilterChange('fromDate', e.target.value)}
-                className="w-full px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">To Date<span className="text-red-500">*</span></label>
-              <input
-                type="date"
-                value={filters.toDate}
-                onChange={e => handleFilterChange('toDate', e.target.value)}
-                className="w-full px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500"
-                required
-              />
-            </div>
+            <FormField
+              label="From Date"
+              type="date"
+              value={filters.fromDate}
+              onChange={value => handleFilterChange('fromDate', value)}
+              required
+            />
+            <FormField
+              label="To Date"
+              type="date"
+              value={filters.toDate}
+              onChange={value => handleFilterChange('toDate', value)}
+              required
+            />
           </div>
           {error && <div className="text-red-600 text-xs mb-4">{error}</div>}
-          <button
-            type="submit"
-            className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-3 rounded text-sm font-semibold hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-md flex items-center justify-center space-x-2"
-          >
-            <Download className="w-4 h-4" />
-            <span>Export to Excel</span>
-          </button>
+          <FormActions
+            primaryLabel="Export to Excel"
+            onPrimary={handleExportToExcel}
+          />
         </form>
       </div>
     </div>
